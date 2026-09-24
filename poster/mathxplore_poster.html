@@ -1,0 +1,580 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>MathXplore Poster</title>
+<!--
+  MathXplore — PEREKA 2026 A0 poster (841 × 1189 mm, portrait).
+
+  TO EDIT: change any text below. Everything you must fill in is marked
+  class="fill" (it prints amber so a missed one is easy to spot on a proof).
+  Search this file for  class="fill"  to find them all. The three logo slots
+  are <div class="logo-slot">; replace each with <img src="assets/yourlogo.png">.
+
+  TO EXPORT: open this file in Chrome → Ctrl+P → Destination "Save as PDF" →
+  More settings → Margins "None", tick "Background graphics" → Save.
+  The A0 page size comes from the @page rule, so Chrome uses it automatically.
+  (Fonts load from Google Fonts, so be online the first time you open it.)
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=STIX+Two+Text:ital,wght@0,400;0,500;1,400;1,500;1,600&family=Space+Grotesk:wght@500;600;700&display=block" rel="stylesheet">
+<style>
+  @page { size: 841mm 1189mm; margin: 0; }
+
+  :root {
+    --ink: #060818;
+    --paper: #eef2fc;
+    --muted: #a9b6d3;
+    --faint: #7686ab;
+
+    --math: #b39cff;
+    --code: #3ee6a8;
+    --viz: #4cc9ff;
+    --spark: #ffc83d;
+    --danger: #ff7a95;
+
+    --display: 'Space Grotesk', 'Segoe UI', sans-serif;
+    --sans: 'Inter', 'Segoe UI', sans-serif;
+    --mono: 'JetBrains Mono', Consolas, monospace;
+    --m: 'STIX Two Text', 'Cambria Math', Cambria, serif;
+
+    --gutter: 120px;
+    --gap: 44px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: var(--ink); -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body { width: 3178px; height: 4493px; overflow: hidden; }
+
+  .poster {
+    position: relative;
+    width: 3178px;
+    height: 4493px;
+    overflow: hidden;
+    color: var(--paper);
+    font-family: var(--sans);
+    font-size: 34px;
+    line-height: 1.4;
+    background:
+      radial-gradient(ellipse 1500px 1000px at 42% -160px, rgba(141, 110, 255, 0.32), transparent 70%),
+      radial-gradient(ellipse 1300px 1100px at 100% 800px, rgba(76, 201, 255, 0.17), transparent 70%),
+      radial-gradient(ellipse 1200px 900px at 0% 2100px, rgba(179, 156, 255, 0.11), transparent 70%),
+      radial-gradient(ellipse 1400px 1000px at 100% 3000px, rgba(76, 201, 255, 0.09), transparent 70%),
+      radial-gradient(ellipse 1300px 900px at 0% 4300px, rgba(255, 200, 61, 0.08), transparent 70%),
+      linear-gradient(180deg, #0c0d2b 0%, #070920 22%, #060818 60%, #05060f 100%);
+  }
+
+  /* ---- Decoration --------------------------------------------------------- */
+  .floor { position: absolute; left: 0; width: 3178px; pointer-events: none; }
+  .sphere {
+    position: absolute;
+    border-radius: 50%;
+    background:
+      radial-gradient(circle at 30% 27%, rgba(255, 255, 255, 0.62) 0, rgba(255, 255, 255, 0.10) 20%, transparent 38%),
+      radial-gradient(circle at 60% 66%, rgba(76, 201, 255, 0.40), rgba(179, 156, 255, 0.30) 55%, rgba(6, 8, 24, 0.85) 100%);
+    border: 2px solid rgba(255, 255, 255, 0.14);
+  }
+
+  /* ---- Type ---------------------------------------------------------------- */
+  .m { font-family: var(--m); font-style: italic; }
+  .m .u { font-style: normal; }
+  .m sup, .sup { font-size: 0.62em; vertical-align: 0.62em; line-height: 0; font-style: normal; }
+  code, .mono { font-family: var(--mono); }
+  .viz { color: var(--viz); } .math { color: var(--math); } .code { color: var(--code); }
+  .spark { color: var(--spark); } .danger { color: var(--danger); } .muted { color: var(--muted); }
+  .fill { color: var(--spark); border-bottom: 3px dashed rgba(255, 200, 61, 0.55); }
+
+  .eyebrow {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: 32px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--viz);
+  }
+  .eyebrow.math { color: var(--math); } .eyebrow.code { color: var(--code); } .eyebrow.spark { color: var(--spark); } .eyebrow.viz { color: var(--viz); }
+  .eyebrow .n { font-family: var(--mono); font-weight: 500; letter-spacing: 0.04em; color: var(--muted); margin-right: 16px; }
+  h2 { font-family: var(--display); font-weight: 600; font-size: 64px; line-height: 1.05; letter-spacing: -0.02em; margin-top: 10px; }
+  h3 { font-family: var(--display); font-weight: 600; font-size: 44px; line-height: 1.1; letter-spacing: -0.01em; }
+
+  /* ---- Glass ---------------------------------------------------------------- */
+  .glass {
+    position: relative;
+    border-radius: 44px;
+    border: 2px solid rgba(255, 255, 255, 0.11);
+    background: linear-gradient(160deg, rgba(255, 255, 255, 0.085), rgba(255, 255, 255, 0.022) 45%, rgba(255, 255, 255, 0.045));
+    box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.14);
+  }
+  .shot {
+    display: block;
+    width: 100%;
+    border-radius: 24px;
+    border: 2px solid rgba(255, 255, 255, 0.13);
+    object-fit: cover;
+    background: #05070f;
+  }
+  .icon { width: 1em; height: 1em; fill: none; stroke: currentColor; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; flex: none; }
+  .card { padding: 46px 54px; }
+
+  /* ---- Layout ---------------------------------------------------------------- */
+  .row { position: absolute; left: var(--gutter); right: var(--gutter); }
+
+  /* Header strip */
+  .top { top: 90px; height: 150px; display: flex; align-items: center; justify-content: space-between; }
+  .logos { display: flex; gap: 28px; }
+  .logo-slot {
+    width: 300px; height: 150px; border-radius: 26px;
+    border: 3px dashed rgba(255, 255, 255, 0.28);
+    display: grid; place-items: center; text-align: center;
+    font-family: var(--display); font-size: 28px; line-height: 1.2; color: var(--faint);
+  }
+  .logo-slot img { max-width: 100%; max-height: 100%; }
+  .event { text-align: right; }
+  .event .name { font-family: var(--display); font-weight: 700; font-size: 56px; letter-spacing: 0.01em; }
+  .event .name span { color: var(--spark); }
+  .event .sub { font-size: 31px; color: var(--muted); margin-top: 2px; }
+  .chips { display: flex; gap: 16px; justify-content: flex-end; margin-top: 16px; }
+  .chip {
+    font-family: var(--display); font-weight: 600; font-size: 27px; letter-spacing: 0.06em;
+    padding: 7px 24px; border-radius: 999px; border: 2px solid rgba(255, 255, 255, 0.16);
+    background: rgba(255, 255, 255, 0.05);
+  }
+  .chip.edu { color: var(--code); border-color: rgba(62, 230, 168, 0.45); background: rgba(62, 230, 168, 0.08); }
+
+  /* Hero */
+  .hero-copy { top: 300px; width: 1700px; }
+  .title {
+    display: flex; align-items: center; gap: 40px;
+    margin-top: 22px;
+    font-family: var(--display); font-weight: 700; font-size: 256px; line-height: 0.9; letter-spacing: -0.035em;
+    white-space: nowrap;
+  }
+  .title svg { width: 200px; height: 200px; flex: none; margin-top: 14px; }
+  .title img.word { width: 1361px; height: 333px; flex: none; margin: -51px 0 -52px; }
+  .tagline { margin-top: 30px; font-family: var(--display); font-weight: 600; font-size: 104px; letter-spacing: -0.02em; line-height: 1; }
+  .tagline span + span { margin-left: 30px; }
+  .pitch { margin-top: 36px; font-size: 48px; line-height: 1.34; color: #dfe6f7; max-width: 1560px; }
+  .pitch b { color: #fff; font-weight: 600; }
+
+  .team {
+    top: 996px; width: 1560px; padding: 24px 44px;
+    display: grid; grid-template-columns: auto 1fr auto 1fr; column-gap: 30px; row-gap: 8px; align-items: baseline;
+    font-size: 34px;
+  }
+  .team dt { font-family: var(--display); font-weight: 600; font-size: 24px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--faint); }
+  .team dd { color: #e7ecf8; }
+  .team .wide { grid-column: 2 / span 3; }
+
+  .hero-art { position: absolute; top: 400px; right: -70px; width: 1560px; }
+  /* The bottom fade is baked into surface_hero.png's alpha - a CSS mask
+     becomes a PDF soft mask, which some viewers render with a hard edge. */
+  .hero-art img { width: 100%; display: block; }
+  .eq-badge { position: absolute; padding: 16px 34px; border-radius: 999px; font-size: 46px; white-space: nowrap; }
+  .eq-badge .dot { display: inline-block; width: 18px; height: 18px; border-radius: 50%; background: var(--viz); box-shadow: 0 0 0 8px rgba(76, 201, 255, 0.18); margin-right: 24px; vertical-align: 6px; }
+  .eq-note { position: absolute; font-size: 28px; color: var(--muted); white-space: nowrap; }
+
+  /* Stats */
+  .stats { top: 1176px; height: 200px; display: grid; grid-template-columns: repeat(6, 1fr); padding: 0 16px; }
+  .stat { padding: 26px 32px 0; position: relative; }
+  .stat + .stat::before { content: ''; position: absolute; left: 0; top: 40px; bottom: 40px; width: 2px; background: rgba(255, 255, 255, 0.10); }
+  .stat .n { font-family: var(--display); font-weight: 700; font-size: 90px; line-height: 1; letter-spacing: -0.03em; }
+  .stat .l { margin-top: 8px; font-size: 28px; line-height: 1.3; color: var(--muted); }
+  .stat .l b { color: var(--paper); font-weight: 600; }
+
+  /* Problem / idea */
+  .why { top: 1412px; height: 568px; display: grid; grid-template-columns: 1150px 1fr; gap: var(--gap); }
+  .pains { margin-top: 28px; display: grid; gap: 24px; }
+  .pain { display: grid; grid-template-columns: 72px 1fr; gap: 26px; align-items: start; }
+  .pain .ic {
+    width: 72px; height: 72px; border-radius: 20px; display: grid; place-items: center; font-size: 38px;
+    background: rgba(255, 122, 149, 0.10); border: 2px solid rgba(255, 122, 149, 0.35); color: var(--danger);
+  }
+  .pain h4 { font-family: var(--display); font-weight: 600; font-size: 38px; line-height: 1.15; }
+  .pain p { font-size: 30px; color: var(--muted); line-height: 1.34; margin-top: 2px; }
+  .pain code { color: var(--danger); font-size: 0.92em; }
+
+  .idea-quote { margin-top: 14px; font-family: var(--display); font-weight: 500; font-size: 48px; line-height: 1.2; letter-spacing: -0.01em; }
+  .views { margin-top: 32px; display: grid; grid-template-columns: 1.15fr 70px 1fr 70px 0.95fr; align-items: stretch; }
+  .view { border-radius: 28px; padding: 22px 28px; background: rgba(4, 6, 18, 0.55); border: 2px solid rgba(255, 255, 255, 0.10); }
+  .view .lab { font-family: var(--display); font-weight: 600; font-size: 23px; letter-spacing: 0.22em; text-transform: uppercase; }
+  .view.mathv { border-color: rgba(179, 156, 255, 0.42); }
+  .view.vizv { border-color: rgba(76, 201, 255, 0.42); padding-bottom: 8px; }
+  .view.codev { border-color: rgba(62, 230, 168, 0.42); }
+  .swap { display: grid; place-items: center; font-size: 54px; color: var(--faint); }
+  .views-note { margin-top: 20px; font-size: 30px; color: var(--muted); }
+  .views-note b { color: var(--paper); font-weight: 600; }
+
+  /* Loop */
+  .loop { top: 2016px; height: 284px; padding: 30px 50px 0; }
+  .loop-head { display: flex; align-items: baseline; justify-content: space-between; }
+  .loop-head h3 { font-size: 44px; }
+  .loop-head .muted { font-size: 28px; }
+  .stages { position: relative; margin-top: 18px; display: grid; grid-template-columns: repeat(9, 1fr); }
+  .stages::before {
+    content: ''; position: absolute; left: 5.5%; right: 5.5%; top: 46px; height: 4px; border-radius: 4px;
+    background: linear-gradient(90deg, var(--math), var(--viz), var(--spark), var(--math), var(--viz), var(--code), var(--spark), var(--code), var(--math));
+    opacity: 0.55;
+  }
+  .stage { position: relative; text-align: center; }
+  .stage .node {
+    width: 96px; height: 96px; margin: 0 auto; border-radius: 50%;
+    display: grid; place-items: center; font-size: 44px;
+    background: #0a0c22; border: 4px solid currentColor;
+    box-shadow: 0 0 0 10px rgba(255, 255, 255, 0.03);
+  }
+  .stage .sname { margin-top: 12px; font-family: var(--display); font-weight: 700; font-size: 30px; letter-spacing: 0.14em; text-transform: uppercase; }
+  .stage .tag { font-size: 25px; color: var(--muted); }
+
+  /* Features */
+  .features-head { top: 2336px; height: 64px; display: flex; align-items: baseline; justify-content: space-between; }
+  .features-head h3 { font-size: 54px; margin-left: 24px; display: inline; }
+  .features-head p { font-size: 30px; color: var(--muted); }
+  .features { top: 2420px; height: 1080px; display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: 1fr 1fr; gap: var(--gap); }
+  .feat { padding: 24px 24px 0; display: flex; flex-direction: column; }
+  .feat .media { position: relative; height: 288px; }
+  .feat .media .shot { height: 288px; }
+  .feat .cap { padding: 22px 10px 0; }
+  .feat h3 { font-size: 40px; display: flex; align-items: center; gap: 16px; }
+  .feat h3 .badge { font-family: var(--mono); font-size: 22px; font-weight: 500; padding: 3px 14px; border-radius: 999px; border: 2px solid currentColor; letter-spacing: 0.02em; }
+  .feat p { margin-top: 8px; font-size: 29px; line-height: 1.36; color: var(--muted); }
+  .feat p b { color: var(--paper); font-weight: 600; }
+  .feat p code { color: var(--code); font-size: 0.94em; }
+  .inset { position: absolute; border-radius: 18px; border: 2px solid rgba(255, 255, 255, 0.22); box-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.9); }
+
+  /* Novelty / impact */
+  .judge { top: 3540px; height: 466px; display: grid; grid-template-columns: 1fr 1fr; gap: var(--gap); }
+  .judge .card { padding: 34px 50px 30px; }
+  table.cmp { width: 100%; border-collapse: collapse; margin-top: 16px; font-size: 29px; }
+  .cmp th { font-family: var(--display); font-weight: 600; font-size: 22px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--faint); text-align: center; padding: 0 8px 10px; line-height: 1.2; }
+  .cmp th:first-child { text-align: left; }
+  .cmp th.us { color: var(--code); }
+  .cmp td { padding: 8px 8px; border-top: 2px solid rgba(255, 255, 255, 0.07); text-align: center; font-size: 34px; line-height: 1; }
+  .cmp td:first-child { text-align: left; font-size: 29px; line-height: 1.25; color: #dfe6f7; }
+  .cmp td.us { color: var(--code); background: rgba(62, 230, 168, 0.06); }
+  .cmp .part { color: var(--spark); } .cmp .no { color: #4d5a7a; }
+  .legend { font-size: 24px; color: var(--faint); }
+  .impacts { margin-top: 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 26px 44px; }
+  .imp h4 { font-family: var(--display); font-weight: 600; font-size: 33px; display: flex; align-items: center; gap: 14px; }
+  .imp h4 .icon { font-size: 34px; }
+  .imp p { font-size: 28px; line-height: 1.34; color: var(--muted); margin-top: 2px; }
+
+  /* Footer row */
+  .foot { top: 4048px; height: 356px; display: grid; grid-template-columns: 1.3fr 1.3fr 0.72fr; gap: var(--gap); }
+  .foot .card { padding: 36px 46px; }
+  .biz { margin-top: 14px; display: grid; gap: 10px; }
+  .biz div { display: grid; grid-template-columns: 130px 1fr; gap: 20px; font-size: 27px; line-height: 1.32; }
+  .biz dt, .biz .k { font-family: var(--display); font-weight: 600; font-size: 23px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--faint); padding-top: 4px; }
+  .biz .v { color: #dfe6f7; }
+  .biz .v i { color: var(--faint); font-style: normal; }
+  .pipe { margin-top: 22px; display: flex; align-items: center; gap: 12px; font-family: var(--mono); font-size: 25px; white-space: nowrap; }
+  .pipe span.b { padding: 9px 16px; border-radius: 14px; border: 2px solid rgba(255, 255, 255, 0.14); background: rgba(4, 6, 18, 0.55); }
+  .pipe span.a { color: var(--faint); }
+  .trust { margin-top: 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px 26px; font-size: 26px; line-height: 1.3; color: #dfe6f7; }
+  .trust div { display: flex; gap: 12px; align-items: baseline; }
+  .trust .icon { color: var(--code); font-size: 26px; position: relative; top: 4px; }
+  .qr { display: grid; grid-template-columns: 210px 1fr; gap: 28px; align-items: center; height: 100%; }
+  .qr-slot {
+    width: 210px; height: 210px; border-radius: 24px; border: 3px dashed rgba(255, 200, 61, 0.6);
+    display: grid; place-items: center; text-align: center; font-family: var(--display); font-size: 26px; color: var(--spark); line-height: 1.2;
+    background: rgba(255, 200, 61, 0.05);
+  }
+  .qr h3 { font-size: 34px; }
+  .qr p { font-size: 26px; color: var(--muted); margin-top: 8px; line-height: 1.35; }
+  .theme-line { position: absolute; left: var(--gutter); right: var(--gutter); top: 4424px; display: flex; justify-content: space-between; font-size: 26px; color: var(--faint); }
+  .theme-line b { color: var(--muted); font-weight: 600; }
+</style>
+</head>
+<body>
+<div class="poster">
+
+  <!-- ===== Decoration ===================================================== -->
+  <svg class="floor" id="floor" style="top: 640px; height: 900px" viewBox="0 0 3178 900" preserveAspectRatio="none"></svg>
+  <div class="sphere" style="width: 230px; height: 230px; left: 1830px; top: 300px; opacity: 0.8"></div>
+  <div class="sphere" style="width: 96px; height: 96px; left: 1700px; top: 890px; opacity: 0.5"></div>
+  <div class="sphere" style="width: 84px; height: 84px; left: 22px; top: 3470px; opacity: 0.45"></div>
+
+  <!-- ===== Header strip ==================================================== -->
+  <header class="row top">
+    <div class="logos">
+      <div class="logo-slot">UMS<br>logo</div>
+      <div class="logo-slot">PEREKA 2026<br>logo</div>
+      <div class="logo-slot">Faculty / school<br>logo</div>
+    </div>
+    <div class="event">
+      <div class="name">PEREKA <span>2026</span> · Pertandingan Reka Cipta</div>
+      <div class="sub">Universiti Malaysia Sabah · 13–14 October 2026 · <i>Transforming Ideas Into Impact</i></div>
+      <div class="chips">
+        <span class="chip edu">CLUSTER · EDUCATION</span>
+        <span class="chip">CATEGORY · <span class="fill">EAT / ASH</span></span>
+        <span class="chip">ENTRY ID · <span class="fill">______</span></span>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===== Hero ============================================================ -->
+  <div class="hero-art">
+    <img src="assets/surface_hero.png" alt="">
+    <div class="glass eq-badge" style="right: 150px; top: 590px"><span class="dot"></span><span class="m">z</span> = sin(<span class="u">√</span>(<span class="m">x</span><sup>2</sup> + <span class="m">y</span><sup>2</sup>) − <span class="m">t</span>)</div>
+    <div class="eq-note" style="right: 190px; top: 700px">live on the landing page — drag to rotate</div>
+  </div>
+
+  <section class="row hero-copy">
+    <div class="eyebrow" style="font-size: 38px">An interactive mathematics laboratory</div>
+    <h1 class="title">
+      <svg viewBox="0 0 32 32" aria-hidden="true">
+        <defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#4cc9ff"/><stop offset="55%" stop-color="#b39cff"/><stop offset="100%" stop-color="#ffc83d"/></linearGradient></defs>
+        <rect x="0.5" y="0.5" width="31" height="31" rx="7.5" fill="#0a0c22" stroke="rgba(255,255,255,0.16)" stroke-width="0.4"/>
+        <path d="M5 26 Q16 2 27 26" fill="none" stroke="url(#lg)" stroke-width="2.6" stroke-linecap="round"/>
+        <path d="M9 9 L5.5 12.5 L9 16 M23 9 L26.5 12.5 L23 16" fill="none" stroke="#c6d1ea" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" opacity="0.8"/>
+        <circle cx="16" cy="24.5" r="2" fill="#ffc83d"/>
+      </svg>
+      <!-- The word is an image (rendered at 4x, ~380 dpi on A0) because gradient-filled
+           text prints badly: PDF cannot clip to this font's glyphs, so viewers show seams
+           or drop the word. To change it, edit and re-render assets/title_word.png. -->
+      <img class="word" src="assets/title_word.png" alt="MathXplore">
+    </h1>
+    <div class="tagline"><span class="viz">See.</span><span class="math">Change.</span><span class="code">Code.</span></div>
+    <p class="pitch">A browser-based lab where students <b>see</b> a function, <b>change</b> it with a slider, <b>predict</b> what happens next — and write the <b>Python</b> that draws it. Mathematics and programming, finally taught together.</p>
+  </section>
+
+  <dl class="row glass team">
+    <dt>Team</dt><dd class="wide"><span class="fill">Member 1</span> · <span class="fill">Member 2</span> · <span class="fill">Member 3</span></dd>
+    <dt>Supervisor</dt><dd><span class="fill">Supervisor name</span></dd>
+    <dt>From</dt><dd><span class="fill">Faculty / school, institution</span></dd>
+  </dl>
+
+  <!-- ===== Numbers ========================================================= -->
+  <section class="row glass stats">
+    <div class="stat"><div class="n viz">5</div><div class="l"><b>Explore modules</b><br>from lines to 3D and geometry</div></div>
+    <div class="stat"><div class="n spark">12</div><div class="l"><b>What If? scenarios</b><br>predict first, then see</div></div>
+    <div class="stat"><div class="n math">6</div><div class="l"><b>levels</b> of Python<br>taught through maths</div></div>
+    <div class="stat"><div class="n viz">12</div><div class="l"><b>challenges</b> graded<br>by running the code</div></div>
+    <div class="stat"><div class="n code">182</div><div class="l"><b>automated checks</b><br>— all passing</div></div>
+    <div class="stat"><div class="n" style="color:#fff">0</div><div class="l"><b>internet or accounts</b><br>needed to run</div></div>
+  </section>
+
+  <!-- ===== Problem / idea ================================================== -->
+  <section class="row why">
+    <div class="glass card">
+      <div class="eyebrow" style="color: var(--danger)"><span class="n">01</span>The problem</div>
+      <h2>Maths and code, taught apart</h2>
+      <div class="pains">
+        <div class="pain">
+          <div class="ic"><svg class="icon" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z"/></svg></div>
+          <div><h4>Two subjects, no bridge</h4><p>Loops learnt on arbitrary examples; graphs never linked to code.</p></div>
+        </div>
+        <div class="pain">
+          <div class="ic"><svg class="icon" viewBox="0 0 24 24"><path d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18ZM12 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8ZM12 13a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z"/></svg></div>
+          <div><h4>Answers without understanding</h4><p>A calculator answers only what you already knew how to ask.</p></div>
+        </div>
+        <div class="pain">
+          <div class="ic"><svg class="icon" viewBox="0 0 24 24"><path d="M12 9v4M12 17h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/></svg></div>
+          <div><h4>Errors that teach nothing</h4><p><code>SyntaxError: invalid syntax</code> is a dead end for a beginner.</p></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="glass card">
+      <div class="eyebrow code"><span class="n">02</span>Our idea</div>
+      <p class="idea-quote">Every Python concept arrives <span class="code">because a piece of mathematics needs it</span> — and every picture on screen is also a program.</p>
+      <div class="views">
+        <div class="view mathv">
+          <div class="lab math">Mathematics</div>
+          <div class="m" style="font-size: 58px; line-height: 1.2; margin-top: 30px; white-space: nowrap">y = ax<sup>2</sup> + bx + c</div>
+        </div>
+        <div class="swap">⇄</div>
+        <div class="view vizv">
+          <div class="lab viz">Picture</div>
+          <svg viewBox="0 0 420 150" style="width: 100%; height: 124px; display: block; margin-top: 6px">
+            <g stroke="rgba(255,255,255,0.10)" stroke-width="1.5">
+              <line x1="0" y1="35" x2="420" y2="35"/><line x1="0" y1="75" x2="420" y2="75"/>
+              <line x1="70" y1="0" x2="70" y2="150"/><line x1="140" y1="0" x2="140" y2="150"/><line x1="280" y1="0" x2="280" y2="150"/><line x1="350" y1="0" x2="350" y2="150"/>
+            </g>
+            <line x1="0" y1="112" x2="420" y2="112" stroke="rgba(255,255,255,0.35)" stroke-width="2"/>
+            <line x1="210" y1="0" x2="210" y2="150" stroke="rgba(255,255,255,0.35)" stroke-width="2"/>
+            <path d="M100 4 Q210 240 320 4" fill="none" stroke="rgba(255,255,255,0.38)" stroke-width="3" stroke-dasharray="9 9"/>
+            <path d="M58 4 Q210 180 362 4" fill="none" stroke="#4cc9ff" stroke-width="5" stroke-linecap="round"/>
+            <circle cx="210" cy="92" r="9" fill="#0a0c22" stroke="#b39cff" stroke-width="4"/>
+          </svg>
+        </div>
+        <div class="swap">⇄</div>
+        <div class="view codev">
+          <div class="lab code">Python</div>
+          <div class="mono" style="font-size: 33px; line-height: 1.45; margin-top: 26px; white-space: nowrap"><span class="code">y</span> = a*x**<span class="spark">2</span><br>&nbsp;&nbsp;+ b*x + c</div>
+        </div>
+      </div>
+      <p class="views-note"><b>Change any one and the other two follow</b> — a slider rewrites the code, and the code redraws the graph.</p>
+    </div>
+  </section>
+
+  <!-- ===== The loop ======================================================== -->
+  <section class="row glass loop">
+    <div class="loop-head">
+      <h3>One learning loop, lit up on every working screen</h3>
+      <span class="muted">so a student always sees where they are — and that there is a next step</span>
+    </div>
+    <div class="stages">
+      <div class="stage math"><div class="node"><svg class="icon" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z"/></svg></div><div class="sname">Learn</div><div class="tag">6-level pathway</div></div>
+      <div class="stage viz"><div class="node"><svg class="icon" viewBox="0 0 24 24"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7-10-7-10-7ZM12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/></svg></div><div class="sname">Explore</div><div class="tag">5 modules</div></div>
+      <div class="stage spark"><div class="node"><svg class="icon" viewBox="0 0 24 24"><path d="M9 21h6M10 18h4M12 3a6 6 0 0 0-4 10.5c.7.8 1 1.5 1 2.5h6c0-1 .3-1.7 1-2.5A6 6 0 0 0 12 3Z"/></svg></div><div class="sname">Predict</div><div class="tag">What If?</div></div>
+      <div class="stage math"><div class="node"><svg class="icon" viewBox="0 0 24 24"><path d="M21 4h-7M10 4H3M21 12h-9M8 12H3M21 20h-5M12 20H3M14 2v4M8 10v4M16 18v4"/></svg></div><div class="sname">Change</div><div class="tag">live sliders</div></div>
+      <div class="stage viz"><div class="node"><svg class="icon" viewBox="0 0 24 24"><path d="M3 3v16a2 2 0 0 0 2 2h16M7 15l4-5 3 3 5-7"/></svg></div><div class="sname">Visualise</div><div class="tag">2D · 3D</div></div>
+      <div class="stage code"><div class="node"><svg class="icon" viewBox="0 0 24 24"><path d="m8 17-5-5 5-5M16 7l5 5-5 5M14 4l-4 16"/></svg></div><div class="sname">Code</div><div class="tag">CodeLab</div></div>
+      <div class="stage spark"><div class="node"><svg class="icon" viewBox="0 0 24 24"><path d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18ZM12 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8ZM12 13a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z"/></svg></div><div class="sname">Test</div><div class="tag">challenges</div></div>
+      <div class="stage code"><div class="node"><svg class="icon" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></div><div class="sname">Understand</div><div class="tag">error lessons</div></div>
+      <div class="stage math"><div class="node"><svg class="icon" viewBox="0 0 24 24"><path d="M9 3h6M10 3v6l-6 9a2 2 0 0 0 1.7 3h12.6a2 2 0 0 0 1.7-3l-6-9V3M7.5 15h9"/></svg></div><div class="sname">Create</div><div class="tag">sandbox · shapes</div></div>
+    </div>
+  </section>
+
+  <!-- ===== Features ======================================================== -->
+  <div class="row features-head">
+    <div><span class="eyebrow"><span class="n">03</span>Inside the lab</span><h3>Real screens, real mathematics</h3></div>
+    <p>Every image is captured from the working system — nothing is mocked up.</p>
+  </div>
+
+  <section class="row features">
+    <article class="glass feat">
+      <div class="media"><img class="shot" src="assets/whatif_card.jpg" alt="" style="object-position: left 60%"></div>
+      <div class="cap">
+        <h3 class="spark">What If? — predict, then see</h3>
+        <p><b>Students commit to a prediction before anything moves.</b> Then the curve animates against a ghost of the old one, and the lab explains why it changed.</p>
+      </div>
+    </article>
+
+    <article class="glass feat">
+      <div class="media">
+        <img class="shot" src="assets/code_graph.jpg" alt="" style="object-position: center 60%">
+        <img class="inset" src="assets/code_editor.jpg" alt="" style="left: 16px; top: 16px; width: 450px">
+      </div>
+      <div class="cap">
+        <h3 class="code">Every curve is also a program</h3>
+        <p>Write Python, press Run, get mathematics back: <b>code → data → graph</b>, drawn on as you watch.</p>
+      </div>
+    </article>
+
+    <article class="glass feat">
+      <div class="media">
+        <img class="shot" src="assets/error_panel.jpg" alt="" style="object-position: left bottom">
+      </div>
+      <div class="cap">
+        <h3 class="danger">Mistakes become lessons</h3>
+        <p>Type <code style="color: var(--danger)">y = 2x + 3</code> and the lab explains that maths allows 2<span class="m">x</span> but Python needs <code>2*x</code> — with a hint that stops short of the answer.</p>
+      </div>
+    </article>
+
+    <article class="glass feat">
+      <div class="media"><img class="shot" src="assets/solids.jpg" alt="" style="object-position: left center"></div>
+      <div class="cap">
+        <h3 class="math">Shapes that know their maths</h3>
+        <p><code>from shapes import *</code> — polygons, solids and turtle graphics. <b>Every shape reports its area, perimeter and volume</b> live.</p>
+      </div>
+    </article>
+
+    <article class="glass feat">
+      <div class="media"><img class="shot" src="assets/saddle_tight.jpg" alt="" style="object-position: center 35%"></div>
+      <div class="cap">
+        <h3 class="viz">Maths in three dimensions</h3>
+        <p>Rotate <span class="m" style="color:var(--paper)">z = a(x<sup>2</sup> − y<sup>2</sup>)</span>, then slice it: <b>every cross-section is an ordinary 2D curve</b>, drawn alongside.</p>
+      </div>
+    </article>
+
+    <article class="glass feat">
+      <div class="media"><img class="shot" src="assets/challenge_card.jpg" alt="" style="object-position: left top"></div>
+      <div class="cap">
+        <h3 class="spark">Graded by running the code</h3>
+        <p>Answers are run, not text-matched, so <b>any correct solution passes</b>. The student's function is drawn over the goal.</p>
+      </div>
+    </article>
+  </section>
+
+  <!-- ===== Novelty / impact ================================================ -->
+  <section class="row judge">
+    <div class="glass card">
+      <div style="display: flex; justify-content: space-between; align-items: baseline"><div class="eyebrow math"><span class="n">04</span>What makes it new</div><div class="legend">● yes &nbsp; ◐ partly / some products &nbsp; ○ no &nbsp; — n/a</div></div>
+      <table class="cmp">
+        <tr><th style="width: 46%"></th><th>Graphing<br>apps</th><th>Online Python<br>editors</th><th class="us">MathXplore</th></tr>
+        <tr><td>Change maths live, in 2D and 3D</td><td>●</td><td class="no">○</td><td class="us">●</td></tr>
+        <tr><td>Python tied to the maths on screen</td><td class="no">○</td><td class="part">◐</td><td class="us">●</td></tr>
+        <tr><td>Predict-then-reveal, built in</td><td class="part">◐</td><td class="no">○</td><td class="us">●</td></tr>
+        <tr><td>Errors explained in maths terms</td><td class="no">—</td><td class="no">○</td><td class="us">●</td></tr>
+        <tr><td>Offline · no account · no data sent</td><td class="part">◐</td><td class="no">○</td><td class="us">●</td></tr>
+      </table>
+    </div>
+
+    <div class="glass card">
+      <div class="eyebrow code"><span class="n">05</span>Impact</div>
+      <div class="impacts">
+        <div class="imp"><h4 class="viz"><svg class="icon" viewBox="0 0 24 24"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7-10-7-10-7ZM12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/></svg>Students</h4><p>Understanding over memorising: every change is predicted, seen and explained.</p></div>
+        <div class="imp"><h4 class="math"><svg class="icon" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8ZM22 21v-2a4 4 0 0 0-3-3.9M16 3.1a4 4 0 0 1 0 7.8"/></svg>Teachers</h4><p>Ready demonstrations, plus a class view built from students' real exported records.</p></div>
+        <div class="imp"><h4 class="spark"><svg class="icon" viewBox="0 0 24 24"><path d="M3 11.5 12 4l9 7.5M5 10v10h14V10M10 20v-6h4v6"/></svg>Low-connectivity schools</h4><p>Runs from one laptop or a school intranet — no internet needed after setup.</p></div>
+        <div class="imp"><h4 class="code"><svg class="icon" viewBox="0 0 24 24"><path d="M3 3v16a2 2 0 0 0 2 2h16M7 15l4-5 3 3 5-7"/></svg>Evidence-ready</h4><p>No effect claimed yet — anonymous on-device logs are ready for a pre/post-test study.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Footer row ====================================================== -->
+  <section class="row foot">
+    <div class="glass card">
+      <div class="eyebrow spark"><span class="n">06</span>Market &amp; next steps</div>
+      <div class="biz">
+        <div><span class="k">Who</span><span class="v">Upper-secondary &amp; pre-university students, teachers, tutors</span></div>
+        <div><span class="k">Model</span><span class="v">Free for students · school licence · offline school kit</span></div>
+        <div><span class="k">Cost</span><span class="v">Static files, no server — near-zero cost per extra student</span></div>
+        <div><span class="k">Next</span><span class="v">School pilot (pre/post-test) · Bahasa Melayu UI · authoring</span></div>
+      </div>
+    </div>
+
+    <div class="glass card">
+      <div class="eyebrow viz"><span class="n">07</span>Under the hood</div>
+      <div class="pipe"><span class="b code">your Python</span><span class="a">→</span><span class="b">parser</span><span class="a">→</span><span class="b">interpreter</span><span class="a">→</span><span class="b math">graphs · shapes · lessons</span></div>
+      <div class="trust">
+        <div><svg class="icon" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg><span>Own Python engine, ~3,900 lines, no dependencies</span></div>
+        <div><svg class="icon" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg><span>No <code>eval</code>, no network, no file access</span></div>
+        <div><svg class="icon" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg><span>Runaway loops stopped safely</span></div>
+        <div><svg class="icon" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg><span>React · TypeScript · Three.js</span></div>
+      </div>
+    </div>
+
+    <div class="glass card qr">
+      <div class="qr-slot">QR code<br>demo link<br>or video</div>
+      <div>
+        <h3>Try it yourself</h3>
+        <p>Ask us for the keyboard, or scan to open the lab.</p>
+        <p><span class="fill">your.email@domain</span></p>
+      </div>
+    </div>
+  </section>
+
+  <div class="theme-line"><span><b>MathXplore</b> · See. Change. Code.</span><span>PEREKA 2026 · <b>Transforming Ideas Into Impact</b></span></div>
+
+</div>
+
+<script>
+  // Perspective grid floor under the hero (vector, so it stays sharp at A0).
+  // The fade is baked into each line rather than applied with an SVG mask:
+  // some PDF viewers approximate soft masks at low zoom and show stray lines.
+  (function () {
+    const svg = document.getElementById('floor');
+    const W = 3178, H = 900, vx = 2350, vy = -260;
+    const fade = (y) => { const t = y / H; return t < 0.55 ? t / 0.55 : Math.max(0, (1 - t) / 0.45); };
+    let out = '<defs><linearGradient id="rf" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="0" y2="' + H + '">' +
+      '<stop offset="0" stop-color="#b39cff" stop-opacity="0"/><stop offset="0.12" stop-color="#b39cff" stop-opacity="0"/>' +
+      '<stop offset="0.55" stop-color="#b39cff" stop-opacity="0.13"/><stop offset="1" stop-color="#b39cff" stop-opacity="0"/></linearGradient></defs>';
+    for (let i = -40; i <= 40; i++) {
+      // Radial lines start a little below the top edge, where the fade is already zero.
+      const x2 = vx + i * 150 * 3, y2 = vy + (H - vy) * 3, y1 = 110;
+      const x1 = vx + (x2 - vx) * (y1 - vy) / (y2 - vy);
+      out += '<line x1="' + x1 + '" y1="' + y1 + '" x2="' + x2 + '" y2="' + y2 + '" stroke="url(#rf)" stroke-width="2"/>';
+    }
+    for (let k = 1; k < 14; k++) {
+      const y = vy + (H + 400 - vy) * Math.pow(k / 14, 2.1);
+      const o = 0.12 * fade(y);
+      if (y > 110 && y < H && o > 0.01) out += '<line x1="0" y1="' + y + '" x2="' + W + '" y2="' + y + '" stroke="#4cc9ff" stroke-opacity="' + o.toFixed(3) + '" stroke-width="2"/>';
+    }
+    svg.innerHTML = out;
+  })();
+
+</script>
+</body>
+</html>

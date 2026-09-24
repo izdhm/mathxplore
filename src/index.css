@@ -1,0 +1,724 @@
+@import 'tailwindcss';
+
+/* =========================================================================
+   MathXplore v2 design tokens
+
+   The visual language is "glass laboratory": frosted panels floating over a
+   deep, slowly drifting ground, with the mathematics as the brightest thing
+   on screen. Depth is real - panels lift, cards tilt, the horizon recedes -
+   and words are rare: an icon, a number or a picture wherever one will do.
+
+   Each domain keeps its hue (mathematics violet, code green, visualisation
+   cyan, attention amber) so a student can tell at a glance what they are
+   looking at without a label saying so.
+
+   Fonts stay system fonts: the platform must run with no network connection.
+   ========================================================================= */
+
+@theme {
+  --color-ink: #04050d;
+  --color-surface: rgba(255, 255, 255, 0.035);
+  --color-surface-2: rgba(255, 255, 255, 0.07);
+  --color-surface-3: rgba(255, 255, 255, 0.12);
+  --color-line: rgba(255, 255, 255, 0.10);
+
+  --color-paper: #edf1fb;
+  --color-muted: #96a6c6;
+  --color-faint: #66769a;
+
+  /* Domain hues */
+  --color-math: #b39cff;
+  --color-math-dim: #6d4fd8;
+  --color-code: #3ee6a8;
+  --color-code-dim: #1a8f68;
+  --color-viz: #4cc9ff;
+  --color-viz-dim: #1a7fb5;
+  --color-spark: #ffc83d;
+  --color-danger: #ff7a95;
+
+  --font-sans: 'Inter', 'Segoe UI Variable Display', 'Segoe UI', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Cascadia Code', 'Consolas', ui-monospace, monospace;
+  --font-math: 'Cambria Math', 'Latin Modern Math', 'STIX Two Math', Cambria, Georgia, serif;
+
+  --radius-panel: 22px;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-ink);
+    color: var(--color-paper);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    overscroll-behavior-y: none;
+  }
+
+  ::selection {
+    background: color-mix(in oklab, var(--color-math) 40%, transparent);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-viz);
+    outline-offset: 3px;
+    border-radius: 8px;
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.14);
+    border-radius: 99px;
+    border: 3px solid transparent;
+    background-clip: content-box;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.24);
+    background-clip: content-box;
+  }
+}
+
+@layer components {
+  /* ---- The ground: a receding horizon and drifting light -------------- */
+  .ambient {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  /* A grid floor in perspective, fading toward a horizon a third of the way
+     down the screen. Where the surrealism lives. */
+  .ambient-floor {
+    position: absolute;
+    left: -30vw;
+    right: -30vw;
+    bottom: -12vh;
+    height: 62vh;
+    transform-origin: 50% 100%;
+    transform: perspective(520px) rotateX(64deg);
+    background-image:
+      linear-gradient(rgba(76, 201, 255, 0.16) 1.5px, transparent 1.5px),
+      linear-gradient(90deg, rgba(179, 156, 255, 0.14) 1.5px, transparent 1.5px);
+    background-size: 68px 68px;
+    mask-image: linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.35) 45%, transparent 100%);
+    animation: floor-drift 14s linear infinite;
+  }
+
+  .ambient-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(70px);
+    opacity: 0.55;
+    will-change: transform;
+  }
+
+  /* A crisp glass sphere: highlight top-left, tinted body, dark rim. */
+  .ambient-glass {
+    position: absolute;
+    border-radius: 50%;
+    background:
+      radial-gradient(circle at 30% 28%, rgba(255, 255, 255, 0.55) 0, rgba(255, 255, 255, 0.08) 22%, transparent 40%),
+      radial-gradient(circle at 60% 65%, rgba(76, 201, 255, 0.35), rgba(179, 156, 255, 0.28) 55%, rgba(4, 5, 13, 0.6) 100%);
+    box-shadow:
+      inset -14px -18px 40px rgba(0, 0, 0, 0.45),
+      inset 6px 8px 24px rgba(255, 255, 255, 0.12),
+      0 40px 80px -30px rgba(76, 201, 255, 0.35);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    opacity: 0.85;
+  }
+
+  .ambient-haze {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 70% 50% at 50% -10%, rgba(179, 156, 255, 0.16), transparent 60%),
+      radial-gradient(ellipse 60% 40% at 90% 100%, rgba(76, 201, 255, 0.10), transparent 60%),
+      radial-gradient(ellipse 50% 40% at 5% 90%, rgba(255, 200, 61, 0.07), transparent 60%);
+  }
+
+  /* ---- Landing: one screen per section --------------------------------- */
+  /* Applied to <html> only while the landing page is showing. Proximity, not
+     mandatory, so a section slightly taller than a small screen can still be
+     scrolled through. */
+  html.snap {
+    scroll-snap-type: y proximity;
+    scroll-padding-top: 74px;
+  }
+  .snap-section {
+    scroll-snap-align: start;
+    min-height: calc(100svh - 74px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* ---- Glass ------------------------------------------------------------ */
+  .panel {
+    position: relative;
+    border-radius: var(--radius-panel);
+    border: 1px solid rgba(255, 255, 255, 0.11);
+    background:
+      linear-gradient(160deg, rgba(255, 255, 255, 0.085), rgba(255, 255, 255, 0.025) 42%, rgba(255, 255, 255, 0.05));
+    backdrop-filter: blur(22px) saturate(150%);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.16),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.3),
+      0 34px 70px -38px rgba(0, 0, 0, 0.9);
+    transition: transform 260ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 260ms ease, border-color 200ms ease;
+  }
+
+  /* A glossy sweep across the top edge, like light on a pane. */
+  .panel::before {
+    content: '';
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 46%;
+    border-radius: inherit;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.07), transparent);
+    pointer-events: none;
+    mask-image: linear-gradient(90deg, transparent, #000 25%, #000 75%, transparent);
+  }
+
+  .panel-flush {
+    border-radius: var(--radius-panel);
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    background: rgba(6, 8, 20, 0.55);
+    backdrop-filter: blur(16px);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 24px 50px -32px rgba(0, 0, 0, 0.8);
+  }
+
+  /* Interactive glass rises toward the viewer. */
+  .lift:hover {
+    transform: translateY(-4px);
+    border-color: rgba(255, 255, 255, 0.2);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.2),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.3),
+      0 46px 80px -36px rgba(0, 0, 0, 0.95),
+      0 0 60px -30px var(--glow, rgba(76, 201, 255, 0.6));
+  }
+
+  /* Tilts toward the cursor. --rx/--ry are set by useTilt. */
+  .tilt {
+    transform: perspective(1100px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) translateY(var(--ty, 0px));
+    transform-style: preserve-3d;
+    transition: transform 180ms ease-out, box-shadow 260ms ease, border-color 200ms ease;
+  }
+  .tilt:hover {
+    --ty: -4px;
+    border-color: rgba(255, 255, 255, 0.2);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.2),
+      0 50px 90px -40px rgba(0, 0, 0, 0.95),
+      0 0 70px -30px var(--glow, rgba(76, 201, 255, 0.55));
+  }
+
+  /* The frame around a canvas or WebGL view: darker glass, inner shadow. */
+  .viz-frame {
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background:
+      radial-gradient(ellipse 80% 60% at 50% 0%, rgba(76, 201, 255, 0.06), transparent 70%),
+      rgba(3, 4, 12, 0.6);
+    box-shadow: inset 0 0 48px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  }
+
+  /* Anything inside a viz frame reads on dark, whatever the theme. */
+  .viz-frame {
+    color: #edf1fb;
+  }
+
+  /* A frame taken to the whole screen: no rounding, deep ground behind it,
+     and the WebGL mount inside stretches to fill (its inline height is only
+     for the in-page layout). */
+  :fullscreen {
+    background: #04050d;
+  }
+  .viz-frame:fullscreen {
+    border-radius: 0;
+    border: 0;
+  }
+  :fullscreen .viz-3d,
+  .viz-3d:fullscreen {
+    height: 100% !important;
+  }
+
+  /* The code editor: dark by default, paper in the light theme (below). */
+  .code-frame {
+    background: #070a19;
+    color: #edf1fb;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  .code-gutter {
+    background: rgba(255, 255, 255, 0.04);
+    color: rgba(102, 118, 154, 0.8);
+    border-right: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  .code-caret {
+    caret-color: #4cc9ff;
+  }
+
+  /* Controls shown inside a fullscreen frame, so a slider can be moved while
+     the picture fills the screen. */
+  .fs-overlay {
+    position: absolute;
+    right: 16px;
+    top: 52px;
+    bottom: 16px;
+    width: min(320px, 40vw);
+    overflow-y: auto;
+    z-index: 20;
+    padding: 10px;
+    border-radius: 18px;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    background: rgba(10, 13, 30, 0.72);
+    backdrop-filter: blur(16px);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12), 0 20px 50px -24px rgba(0, 0, 0, 0.85);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  :root[data-theme='light'] .fs-overlay {
+    background: rgba(255, 255, 255, 0.8);
+    border-color: rgba(20, 30, 60, 0.14);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.95), 0 20px 50px -24px rgba(30, 40, 80, 0.4);
+  }
+
+  .glass-chip {
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    background: rgba(10, 13, 30, 0.72);
+    backdrop-filter: blur(12px);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12), 0 10px 28px -14px rgba(0, 0, 0, 0.85);
+  }
+
+  /* Small uppercase label that sits above a panel's contents. Rare in v2. */
+  .eyebrow {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--color-faint);
+  }
+
+  /* ---- Mathematical notation ------------------------------------------- */
+  .math {
+    font-family: var(--font-math);
+    font-style: italic;
+    letter-spacing: 0.01em;
+  }
+
+  .math-display {
+    font-family: var(--font-math);
+    font-style: italic;
+    font-size: 1.5rem;
+    line-height: 1.35;
+  }
+
+  /* Glowing notation: the equation is the headline. */
+  .math-glow {
+    text-shadow: 0 0 22px color-mix(in oklab, currentColor 55%, transparent);
+  }
+
+  /* ---- Buttons ----------------------------------------------------------- */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    padding: 0.6rem 1.1rem;
+    transition: transform 160ms cubic-bezier(0.16, 1, 0.3, 1), filter 160ms ease, box-shadow 200ms ease, border-color 160ms ease, background 160ms ease;
+    border: 1px solid transparent;
+    cursor: pointer;
+    white-space: nowrap;
+    position: relative;
+  }
+
+  .btn-primary {
+    background: linear-gradient(135deg, var(--color-math), #7c5cf0 60%, #5b3fd6);
+    color: #fff;
+    border-color: rgba(255, 255, 255, 0.22);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.35),
+      inset 0 -2px 6px rgba(0, 0, 0, 0.25),
+      0 12px 30px -10px color-mix(in oklab, var(--color-math) 75%, transparent);
+  }
+  .btn-primary:hover {
+    filter: brightness(1.1);
+    transform: translateY(-2px);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.4),
+      inset 0 -2px 6px rgba(0, 0, 0, 0.25),
+      0 20px 40px -12px color-mix(in oklab, var(--color-math) 85%, transparent);
+  }
+
+  .btn-code {
+    background: linear-gradient(135deg, var(--color-code), #12b981 65%, #0d9a6c);
+    color: #04231a;
+    border-color: rgba(255, 255, 255, 0.28);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.45),
+      inset 0 -2px 6px rgba(0, 0, 0, 0.18),
+      0 12px 30px -10px color-mix(in oklab, var(--color-code) 70%, transparent);
+  }
+  .btn-code:hover {
+    filter: brightness(1.06);
+    transform: translateY(-2px);
+  }
+
+  .btn-ghost {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.12);
+    color: var(--color-paper);
+    backdrop-filter: blur(10px);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  }
+  .btn-ghost:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.22);
+    transform: translateY(-1px);
+  }
+
+  .btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    transform: none;
+    filter: none;
+  }
+
+  /* Round icon buttons - the primary control in v2. */
+  .icon-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.04);
+    color: var(--color-muted);
+    transition: transform 160ms cubic-bezier(0.16, 1, 0.3, 1), background 160ms ease, color 160ms ease, border-color 160ms ease, box-shadow 200ms ease;
+    cursor: pointer;
+  }
+  .icon-btn:hover {
+    color: var(--color-paper);
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.22);
+    transform: translateY(-1px);
+  }
+  .icon-btn[data-on='true'] {
+    color: var(--tone, var(--color-viz));
+    border-color: color-mix(in oklab, var(--tone, var(--color-viz)) 45%, transparent);
+    background: color-mix(in oklab, var(--tone, var(--color-viz)) 14%, transparent);
+    box-shadow: 0 0 24px -6px color-mix(in oklab, var(--tone, var(--color-viz)) 60%, transparent);
+  }
+  .icon-btn:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  /* ---- Sliders: the primary tool for parameter experiments -------------- */
+  .mx-slider {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 6px;
+    border-radius: 99px;
+    background:
+      linear-gradient(90deg, color-mix(in oklab, var(--thumb, var(--color-viz)) 55%, transparent), color-mix(in oklab, var(--thumb, var(--color-viz)) 15%, transparent));
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.5), inset 0 -1px 0 rgba(255, 255, 255, 0.06);
+    outline: none;
+    cursor: grab;
+  }
+  .mx-slider:active {
+    cursor: grabbing;
+  }
+  .mx-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background:
+      radial-gradient(circle at 35% 30%, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.2) 45%, transparent 60%),
+      var(--thumb, var(--color-viz));
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    box-shadow:
+      0 4px 14px -2px rgba(0, 0, 0, 0.7),
+      0 0 18px -2px var(--thumb, var(--color-viz));
+    transition: transform 120ms ease;
+  }
+  .mx-slider::-webkit-slider-thumb:hover {
+    transform: scale(1.15);
+  }
+  .mx-slider::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--thumb, var(--color-viz));
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    box-shadow: 0 4px 14px -2px rgba(0, 0, 0, 0.7), 0 0 18px -2px var(--thumb, var(--color-viz));
+  }
+
+  /* ---- Code ------------------------------------------------------------- */
+  .code-surface {
+    font-family: var(--font-mono);
+    font-size: 13.5px;
+    line-height: 1.65;
+    tab-size: 4;
+  }
+
+  .tok-kw { color: #c9a6ff; }
+  .tok-def { color: #8fe0ff; }
+  .tok-num { color: #ffcf5c; }
+  .tok-str { color: #9cf2c3; }
+  .tok-com { color: #5b6a8c; font-style: italic; }
+  .tok-fn { color: #4cc9ff; }
+  .tok-op { color: #a3b0c9; }
+  .tok-builtin { color: #6ef0dc; }
+
+  /* ---- Rings: progress as a shape, not a sentence ------------------------ */
+  .ring {
+    --p: 0;
+    --tone: var(--color-math);
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background:
+      radial-gradient(closest-side, rgba(6, 8, 20, 0.9) 78%, transparent 80% 100%),
+      conic-gradient(var(--tone) calc(var(--p) * 1%), rgba(255, 255, 255, 0.08) 0);
+    box-shadow: 0 0 22px -8px color-mix(in oklab, var(--tone) 60%, transparent);
+    font-size: 11px;
+    font-variant-numeric: tabular-nums;
+    color: var(--color-paper);
+  }
+}
+
+/* =========================================================================
+   Light theme. Same glass, lit from the front: the tokens swap, the ambient
+   ground brightens, and the instruments (viz frames, code) stay dark.
+   ========================================================================= */
+:root[data-theme='light'] {
+  --color-ink: #eef1f8;
+  --color-surface: rgba(255, 255, 255, 0.55);
+  --color-surface-2: rgba(20, 30, 60, 0.06);
+  --color-surface-3: rgba(20, 30, 60, 0.12);
+  --color-line: rgba(20, 30, 60, 0.13);
+
+  --color-paper: #111730;
+  --color-muted: #4a5879;
+  --color-faint: #7b879f;
+
+  --color-math: #6a4fe0;
+  --color-code: #0f9d6e;
+  --color-viz: #0b87c9;
+  --color-spark: #b97a00;
+  --color-danger: #d53d61;
+}
+
+@layer components {
+  :root[data-theme='light'] .panel {
+    border-color: rgba(20, 30, 60, 0.12);
+    background: linear-gradient(160deg, rgba(255, 255, 255, 0.74), rgba(255, 255, 255, 0.5) 42%, rgba(255, 255, 255, 0.64));
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.95),
+      inset 0 -1px 0 rgba(20, 30, 60, 0.06),
+      0 30px 60px -36px rgba(30, 40, 80, 0.45);
+  }
+  :root[data-theme='light'] .panel::before {
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.55), transparent);
+  }
+  :root[data-theme='light'] .panel-flush {
+    background: rgba(255, 255, 255, 0.62);
+    border-color: rgba(20, 30, 60, 0.1);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9), 0 24px 50px -32px rgba(30, 40, 80, 0.4);
+  }
+  :root[data-theme='light'] .lift:hover,
+  :root[data-theme='light'] .tilt:hover {
+    border-color: rgba(20, 30, 60, 0.22);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.95),
+      0 40px 70px -36px rgba(30, 40, 80, 0.5),
+      0 0 60px -30px var(--glow, rgba(11, 135, 201, 0.5));
+  }
+  :root[data-theme='light'] .glass-chip {
+    background: rgba(255, 255, 255, 0.78);
+    border-color: rgba(20, 30, 60, 0.14);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.95), 0 10px 24px -14px rgba(30, 40, 80, 0.4);
+  }
+  :root[data-theme='light'] .icon-btn {
+    background: rgba(20, 30, 60, 0.04);
+    border-color: rgba(20, 30, 60, 0.12);
+  }
+  :root[data-theme='light'] .icon-btn:hover {
+    background: rgba(20, 30, 60, 0.09);
+    border-color: rgba(20, 30, 60, 0.2);
+  }
+  :root[data-theme='light'] .btn-ghost {
+    background: rgba(255, 255, 255, 0.6);
+    border-color: rgba(20, 30, 60, 0.14);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  }
+  :root[data-theme='light'] .btn-ghost:hover {
+    background: rgba(255, 255, 255, 0.92);
+    border-color: rgba(20, 30, 60, 0.24);
+  }
+  :root[data-theme='light'] .btn-primary {
+    color: #fff;
+  }
+  :root[data-theme='light'] .ring {
+    background:
+      radial-gradient(closest-side, rgba(255, 255, 255, 0.94) 78%, transparent 80% 100%),
+      conic-gradient(var(--tone) calc(var(--p) * 1%), rgba(20, 30, 60, 0.1) 0);
+  }
+  :root[data-theme='light'] .ambient-floor {
+    background-image:
+      linear-gradient(rgba(11, 135, 201, 0.2) 1.5px, transparent 1.5px),
+      linear-gradient(90deg, rgba(106, 79, 224, 0.16) 1.5px, transparent 1.5px);
+  }
+  :root[data-theme='light'] .ambient-haze {
+    background:
+      radial-gradient(ellipse 70% 50% at 50% -10%, rgba(106, 79, 224, 0.16), transparent 60%),
+      radial-gradient(ellipse 60% 40% at 90% 100%, rgba(11, 135, 201, 0.14), transparent 60%),
+      radial-gradient(ellipse 50% 40% at 5% 90%, rgba(185, 122, 0, 0.1), transparent 60%);
+  }
+  :root[data-theme='light'] .ambient-orb {
+    opacity: 0.4;
+  }
+  :root[data-theme='light'] .ambient-glass {
+    background:
+      radial-gradient(circle at 30% 28%, rgba(255, 255, 255, 0.98) 0, rgba(255, 255, 255, 0.35) 22%, transparent 40%),
+      radial-gradient(circle at 60% 65%, rgba(11, 135, 201, 0.38), rgba(106, 79, 224, 0.32) 55%, rgba(40, 50, 90, 0.5) 100%);
+    border-color: rgba(255, 255, 255, 0.7);
+    box-shadow:
+      inset -14px -18px 40px rgba(20, 30, 80, 0.25),
+      inset 6px 8px 24px rgba(255, 255, 255, 0.5),
+      0 40px 80px -30px rgba(11, 135, 201, 0.35);
+  }
+  /* Instruments follow the theme: paper-white frames, dark ink. */
+  :root[data-theme='light'] .viz-frame {
+    color: var(--color-paper);
+    background:
+      radial-gradient(ellipse 80% 60% at 50% 0%, rgba(11, 135, 201, 0.06), transparent 70%),
+      rgba(255, 255, 255, 0.72);
+    border-color: rgba(20, 30, 60, 0.14);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.95), inset 0 0 40px rgba(20, 30, 60, 0.04);
+  }
+  :root[data-theme='light'] :fullscreen {
+    background: #eef1f8;
+  }
+  :root[data-theme='light'] .code-frame {
+    background: rgba(255, 255, 255, 0.82);
+    color: #111730;
+    border-color: rgba(20, 30, 60, 0.14);
+  }
+  :root[data-theme='light'] .code-gutter {
+    background: rgba(20, 30, 60, 0.04);
+    color: rgba(60, 75, 110, 0.7);
+    border-right-color: rgba(20, 30, 60, 0.1);
+  }
+  :root[data-theme='light'] .code-caret {
+    caret-color: #0b87c9;
+  }
+  :root[data-theme='light'] .tok-kw { color: #7c3aed; }
+  :root[data-theme='light'] .tok-def { color: #0369a1; }
+  :root[data-theme='light'] .tok-num { color: #b45309; }
+  :root[data-theme='light'] .tok-str { color: #047857; }
+  :root[data-theme='light'] .tok-com { color: #8892a8; }
+  :root[data-theme='light'] .tok-fn { color: #0b87c9; }
+  :root[data-theme='light'] .tok-op { color: #475569; }
+  :root[data-theme='light'] .tok-builtin { color: #0f766e; }
+  :root[data-theme='light'] .mx-slider::-webkit-slider-thumb {
+    border-color: rgba(255, 255, 255, 0.9);
+  }
+}
+
+@layer base {
+  :root[data-theme='light'] ::-webkit-scrollbar-thumb {
+    background: rgba(20, 30, 60, 0.22);
+    background-clip: content-box;
+  }
+  :root[data-theme='light'] ::-webkit-scrollbar-thumb:hover {
+    background: rgba(20, 30, 60, 0.34);
+    background-clip: content-box;
+  }
+}
+
+@layer utilities {
+  /* Entrance animations fill *backwards*, not *both*: an animation that stays
+     applied after it ends keeps a compositing effect on the element, and in
+     Chromium that stops backdrop-filter seeing through it. Glass inside an
+     animated ancestor would silently turn opaque. */
+  .animate-rise {
+    animation: rise 640ms cubic-bezier(0.16, 1, 0.3, 1) backwards;
+  }
+  .animate-fade {
+    animation: fade 380ms ease backwards;
+  }
+  .animate-float {
+    animation: float 7s ease-in-out infinite;
+  }
+
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(18px) scale(0.985); }
+    to { opacity: 1; transform: none; }
+  }
+  @keyframes fade {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+  @keyframes floor-drift {
+    from { background-position: 0 0, 0 0; }
+    to { background-position: 0 68px, 0 0; }
+  }
+  @keyframes orb-a {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(6vw, -5vh) scale(1.12); }
+  }
+  @keyframes orb-b {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(-7vw, 6vh) scale(0.92); }
+  }
+  @keyframes orb-c {
+    0%, 100% { transform: translate(0, 0) rotate(0deg); }
+    50% { transform: translate(-3vw, -4vh) rotate(8deg); }
+  }
+  @keyframes pulse-ring {
+    0% { box-shadow: 0 0 0 0 color-mix(in oklab, var(--color-spark) 55%, transparent); }
+    70% { box-shadow: 0 0 0 12px transparent; }
+    100% { box-shadow: 0 0 0 0 transparent; }
+  }
+  .pulse-ring {
+    animation: pulse-ring 1.9s ease-out infinite;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}

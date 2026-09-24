@@ -1,0 +1,36 @@
+{
+  "name": "mathxplore",
+  "private": true,
+  "version": "2.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "lint": "oxlint",
+    "preview": "vite preview",
+    "test:engine": "node scripts/run-tests.mjs scripts/test-engine.ts",
+    "test:pages": "node scripts/run-tests.mjs scripts/test-pages.tsx",
+    "test": "npm run test:engine && npm run test:graders && npm run test:pages && npm run test:mount",
+    "test:graders": "node scripts/run-tests.mjs scripts/test-graders.ts",
+    "test:mount": "node scripts/run-tests.mjs scripts/test-mount.tsx"
+  },
+  "dependencies": {
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
+    "react-router-dom": "^7.18.2",
+    "three": "^0.185.1"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.3.3",
+    "@types/node": "^24.13.3",
+    "@types/react": "^19.2.17",
+    "@types/react-dom": "^19.2.3",
+    "@types/three": "^0.185.4",
+    "@vitejs/plugin-react": "^6.0.4",
+    "jsdom": "^29.1.1",
+    "oxlint": "^1.75.0",
+    "tailwindcss": "^4.3.3",
+    "typescript": "~6.0.2",
+    "vite": "^8.2.0"
+  }
+}

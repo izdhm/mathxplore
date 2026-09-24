@@ -1,0 +1,295 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>MathXplore · the wow factor and how it compares</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=STIX+Two+Text:ital@0;1&family=Space+Grotesk:wght@500;600;700&display=block" rel="stylesheet">
+<style>
+  @page { size: A4; margin: 15mm 16mm 17mm; }
+  :root {
+    --ink: #141a2e; --soft: #4a5572; --faint: #7a849e; --rule: #e3e7f0; --paper: #ffffff;
+    --math: #6d4fd8; --code: #13805c; --viz: #16719f; --spark: #a86a00; --danger: #c43a5a;
+    --display: 'Space Grotesk', 'Segoe UI', sans-serif; --sans: 'Inter', 'Segoe UI', sans-serif;
+    --mono: 'JetBrains Mono', Consolas, monospace; --m: 'STIX Two Text', Cambria, serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body { font-family: var(--sans); font-size: 9.6pt; line-height: 1.48; color: var(--ink); background: var(--paper); }
+  .page { break-before: page; }
+  .page:first-child { break-before: auto; }
+  h1 { font-family: var(--display); font-weight: 700; font-size: 28pt; line-height: 1.05; letter-spacing: -0.02em; }
+  h1 .x { color: var(--math); }
+  h2 { font-family: var(--display); font-weight: 600; font-size: 18pt; line-height: 1.15; letter-spacing: -0.01em; margin-bottom: 3mm; }
+  h3 { font-family: var(--display); font-weight: 600; font-size: 12pt; line-height: 1.25; margin: 4.5mm 0 1.5mm; }
+  p { margin: 0 0 2.2mm; }
+  ul, ol { margin: 0 0 2.5mm 5mm; }
+  li { margin-bottom: 1mm; padding-left: 1mm; }
+  a { color: var(--viz); text-decoration: none; border-bottom: 1px solid rgba(22, 113, 159, 0.35); }
+  code, .mono { font-family: var(--mono); font-size: 0.9em; }
+  .m { font-family: var(--m); font-style: italic; }
+  b, strong { font-weight: 600; }
+  .muted { color: var(--soft); } .faint { color: var(--faint); }
+  .kicker { font-family: var(--display); font-weight: 600; font-size: 8.5pt; letter-spacing: 0.2em; text-transform: uppercase; color: var(--viz); margin-bottom: 1.5mm; }
+  .kicker .n { font-family: var(--mono); letter-spacing: 0.04em; color: var(--faint); margin-right: 2mm; }
+  .lead { font-size: 11.5pt; color: var(--soft); }
+
+  .answer { margin-top: 6mm; border-radius: 3mm; padding: 5mm 6mm; background: #10152b; color: #eef2fc; }
+  .answer .tag { font-family: var(--display); font-weight: 600; font-size: 7.5pt; letter-spacing: 0.2em; text-transform: uppercase; color: #ffc83d; margin-bottom: 1.5mm; }
+  .answer p { font-family: var(--display); font-size: 13.5pt; line-height: 1.3; margin: 0; }
+  .answer p span { color: #3ee6a8; }
+  .answer .sub { font-family: var(--sans); font-size: 9.6pt; line-height: 1.5; color: #b6c2dc; margin-top: 2.5mm; }
+
+  .moment { display: grid; grid-template-columns: 11mm 1fr 58mm; gap: 4mm; padding: 4mm 0; border-top: 1.5px solid var(--rule); break-inside: avoid; }
+  .moment .num { font-family: var(--display); font-weight: 700; font-size: 20pt; line-height: 1; }
+  .moment h3 { margin: 0 0 1mm; }
+  .moment .where { font-size: 8.6pt; color: var(--faint); margin-bottom: 1.5mm; }
+  .moment .why { font-size: 9pt; background: #f4f6fb; border-radius: 2mm; padding: 2mm 3mm; margin-top: 1.5mm; }
+  .moment .why b { color: var(--ink); }
+  .moment img { width: 58mm; border-radius: 2mm; display: block; }
+  .moment .pair { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5mm; }
+  .moment .pair img { width: 100%; }
+  .offline-art { width: 58mm; height: 36mm; border-radius: 2mm; background: #10152b; color: #3ee6a8; display: grid; place-items: center; text-align: center; font-family: var(--mono); font-size: 8.5pt; line-height: 1.5; }
+  .offline-art svg { width: 13mm; height: 13mm; fill: none; stroke: currentColor; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; display: block; margin: 0 auto 2mm; }
+
+  table { width: 100%; border-collapse: collapse; margin: 2mm 0 3mm; font-size: 8.9pt; }
+  th { text-align: left; font-family: var(--display); font-weight: 600; font-size: 7.6pt; letter-spacing: 0.08em; text-transform: uppercase; color: var(--faint); padding: 1.4mm 2mm; border-bottom: 1.5px solid var(--ink); }
+  td { padding: 2mm 2mm; border-bottom: 1px solid var(--rule); vertical-align: top; }
+  td:first-child { font-weight: 600; }
+  td .links { display: block; font-weight: 400; font-size: 8.4pt; margin-top: 0.8mm; line-height: 1.55; }
+  tr.close td { background: #f6f3ff; }
+  .pill { display: inline-block; font-family: var(--display); font-weight: 600; font-size: 6.8pt; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.3mm 1.6mm; border-radius: 99px; vertical-align: 0.3mm; margin-left: 1mm; }
+  .pill.close { color: var(--math); border: 1px solid rgba(109, 79, 216, 0.45); }
+  .pill.gone { color: var(--danger); border: 1px solid rgba(196, 58, 90, 0.45); }
+
+  .box { border-radius: 2.5mm; padding: 3mm 4mm; margin: 2mm 0 3mm; break-inside: avoid; }
+  .box.good { background: #f3faf7; border: 1.5px solid #bfe3d4; }
+  .box.warn { background: #fdf0f3; border: 1.5px solid #efbccb; }
+  .box.note { background: #fff8e8; border: 1.5px solid #f0d9a4; }
+  .box .tag { font-family: var(--display); font-weight: 600; font-size: 7.5pt; letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 1mm; }
+  .box.good .tag { color: var(--code); } .box.warn .tag { color: var(--danger); } .box.note .tag { color: var(--spark); }
+  .box p:last-child, .box ul:last-child { margin-bottom: 0; }
+
+  .uniq { display: grid; grid-template-columns: 1fr 1fr; gap: 4mm; margin-top: 2mm; }
+  .uniq .item { border: 1.5px solid var(--rule); border-radius: 2.5mm; padding: 3mm 4mm; break-inside: avoid; }
+  .uniq .item h3 { margin: 0 0 1mm; font-size: 11pt; }
+  .uniq .item p { font-size: 9pt; margin: 0; }
+  .say { display: grid; grid-template-columns: 1fr 1fr; gap: 4mm; }
+
+  .qa td:first-child { width: 36%; }
+  .pitch { margin-top: 3mm; border-radius: 3mm; padding: 5mm 6mm; background: #10152b; color: #eef2fc; font-family: var(--display); font-size: 14pt; line-height: 1.3; }
+  .pitch .tag { font-size: 7.5pt; letter-spacing: 0.2em; text-transform: uppercase; color: #ffc83d; margin-bottom: 1.5mm; font-weight: 600; }
+  .linklist { columns: 2; column-gap: 6mm; font-size: 8.6pt; }
+  .linklist div { break-inside: avoid; margin-bottom: 1.6mm; }
+  .linklist b { display: block; }
+  .linklist a { font-family: var(--mono); font-size: 7.6pt; word-break: break-all; }
+</style>
+</head>
+<body>
+
+<!-- ======================================================================= -->
+<section class="page">
+  <div class="kicker">PEREKA 2026 · Briefing notes</div>
+  <h1>The wow factor —<br>and how Math<span class="x">Xplore</span> compares</h1>
+  <p class="lead" style="margin-top: 3mm">What makes the lab memorable in a 60-second visit, what else exists, and how to talk about the difference honestly.</p>
+  <p class="faint" style="font-size: 8.5pt">Prepared 24 September 2026. Every link was checked that day; claims about MathXplore were checked against its source code.</p>
+
+  <div class="answer">
+    <div class="tag">The short answer</div>
+    <p>MathXplore treats <span>maths, pictures and code as one thing.</span></p>
+    <p class="sub">Most tools do one of these well. MathXplore makes you move between all three, predict before you see, and learn from the exact mistakes maths students make — and it keeps working with the wifi off.</p>
+  </div>
+
+  <h2 style="margin-top: 7mm">Four wow moments — 60 seconds in front of a judge</h2>
+
+  <div class="moment">
+    <div class="num" style="color: var(--viz)">01</div>
+    <div>
+      <h3>Drag a slider</h3>
+      <div class="where">Explore → Quadratic Functions</div>
+      <p>The parabola moves; its vertex, roots, axis of symmetry and discriminant update live. The Python beside it changes too: <code>a, b, c = 1, 0, -3</code> becomes <code>a, b, c = -1, 0, -3</code>. That panel is generated from the slider values (<code>src/pages/explore/QuadraticModule.tsx</code>, line 111), and <i>Open in CodeLab</i> carries it over to run and edit.</p>
+      <div class="why"><b>Why it lands:</b> the judge sees in one gesture that the equation, the picture and the program are the same object.</div>
+    </div>
+    <div class="pair"><img src="assets/wow_sliders.jpg" alt=""><img src="assets/wow_code.jpg" alt=""></div>
+  </div>
+
+  <div class="moment">
+    <div class="num" style="color: var(--spark)">02</div>
+    <div>
+      <h3>"What happens if <span class="m">a</span> goes from 1 to −1?"</h3>
+      <div class="where">The What If? panel on the same page, scenario 1</div>
+      <p>The judge has to commit to an answer — the button reads <i>Choose a prediction first</i> until they do. Then <i>Lock in and see what happens</i>: the curve animates against a ghost of the old one, and the lab explains what happened, the concept behind it, and the same change in Python.</p>
+      <div class="why"><b>Why it lands:</b> committing to an answer makes them care about the reveal — and they find out whether their own intuition was right.</div>
+    </div>
+    <img src="assets/whatif_card.jpg" alt="">
+  </div>
+</section>
+
+<!-- ======================================================================= -->
+<section class="page">
+  <div class="moment" style="border-top: none; padding-top: 0">
+    <div class="num" style="color: var(--danger)">03</div>
+    <div>
+      <h3>Type <code>y = 2x + 3</code></h3>
+      <div class="where">CodeLab</div>
+      <p>Most tools answer with <code>SyntaxError: invalid syntax</code>. MathXplore says <i>"Missing multiplication sign — Python cannot read "2x". In maths, 2x means 2 times x, but Python always needs the multiplication sign written out: 2*x"</i>, then gives a hint that stops short of the answer, and a "Why Python does this" note.</p>
+      <p>The engine has lessons like this for other maths habits too: <code>x^2</code> instead of <code>x**2</code> · <code>=</code> versus <code>==</code> · square roots of negative numbers · dividing by zero · a function that never returns its answer · counting from 0.</p>
+      <div class="why"><b>Why it lands:</b> every maths student makes this mistake, and here the mistake becomes the lesson.</div>
+    </div>
+    <img src="assets/error_panel.jpg" alt="">
+  </div>
+
+  <div class="moment">
+    <div class="num" style="color: var(--code)">04</div>
+    <div>
+      <h3>Switch the laptop to airplane mode</h3>
+      <div class="where">Anywhere in the app</div>
+      <p>Everything keeps working — navigate, rotate the 3D views, run code — with no account and nothing sent anywhere. The Python engine is part of the page, so there is no download to wait for.</p>
+      <div class="why"><b>Why it lands:</b> at a Sabah event, where school connectivity is a real problem, this is the moment that turns "nice" into "we could use this".</div>
+      <div class="box note" style="margin-top: 2mm"><div class="tag">Set-up tip</div><p>Run it from the laptop itself (<code>npm run preview</code>, a <i>localhost</i> address). Airplane mode doesn't affect localhost. A hosted copy would fail on a full page reload with no connection.</p></div>
+    </div>
+    <div class="offline-art">
+      <div><svg viewBox="0 0 24 24"><path d="M12 20h.01M8.5 16.4a5 5 0 0 1 7 0M5 12.9a10 10 0 0 1 5.2-2.7M19 12.9a10 10 0 0 0-2-1.5M2 8.8a15 15 0 0 1 4.2-2.6M22 8.8a15 15 0 0 0-11.3-3.8M2 2l20 20"/></svg>airplane mode on<br>MathXplore still running</div>
+    </div>
+  </div>
+
+</section>
+
+<!-- ======================================================================= -->
+<section class="page">
+  <div class="kicker"><span class="n">·</span>The landscape</div>
+  <h2>How it compares</h2>
+  <p class="muted">Names are links. Rows are categories of tools; examples are the best-known ones.</p>
+  <table>
+    <tr><th style="width: 25%">Existing tool</th><th style="width: 36%">What it does well</th><th>What MathXplore adds</th></tr>
+    <tr><td>Graphing calculators
+        <span class="links"><a href="https://www.desmos.com/calculator">Desmos</a> · <a href="https://www.desmos.com/3d">Desmos 3D</a><br><a href="https://www.geogebra.org">GeoGebra</a> · <a href="https://www.geogebra.org/download">offline apps</a></span></td>
+      <td>Excellent, free 2D and 3D graphing with sliders, geometry and algebra.</td>
+      <td>Python tied to the same picture, predict-then-reveal questions, errors explained in maths terms, challenges graded by running code.</td></tr>
+    <tr class="close"><td>GeoGebra's Python app <span class="pill close">closest idea</span>
+        <span class="links"><a href="https://www.geogebra.org/python/index.html">PyGgb web app</a> · <a href="https://www.geogebra.org/python/doc/index.html">docs</a></span></td>
+      <td>"Allows users to create GeoGebra constructions using the Python programming language" — code that draws maths.</td>
+      <td>A guided loop around the code — lessons, What If? predictions, maths-aware error lessons, graded challenges — running offline from files you keep.</td></tr>
+    <tr><td>Brilliant
+        <span class="links"><a href="https://brilliant.org">brilliant.org</a></span></td>
+      <td>Polished, interactive "try it first" lessons in maths and coding.</td>
+      <td>Free; the maths and the code on the same screen as one object rather than in separate courses; works offline.</td></tr>
+    <tr><td>Jupyter notebooks with slider widgets
+        <span class="links"><a href="https://jupyter.org">Jupyter</a> · <a href="https://ipywidgets.readthedocs.io">ipywidgets</a> · <a href="https://jupyterlite.readthedocs.io">JupyterLite</a></span></td>
+      <td>Real Python, sliders and plots. JupyterLite runs in the browser using <a href="https://pyodide.org">Pyodide</a>.</td>
+      <td>No set-up and no large first download; errors explained for a maths learner; a structured path instead of a blank notebook.</td></tr>
+    <tr><td>Online Python editors
+        <span class="links"><a href="https://replit.com">Replit</a> · <a href="https://www.programiz.com/python-programming/online-compiler/">Programiz</a><br><a href="https://trinket.io">Trinket</a> <span class="pill gone">shut down</span></span></td>
+      <td>Real Python in a browser tab, some with turtle graphics.</td>
+      <td>Works without a connection or an account; errors explained; every program linked to the maths it draws.</td></tr>
+    <tr><td>Beginner-friendly Python
+        <span class="links"><a href="https://thonny.org">Thonny</a> · <a href="https://pythontutor.com">Python Tutor</a><br><a href="https://futurecoder.io">Futurecoder</a> · <a href="https://friendly-traceback.github.io/docs/">friendly-traceback</a></span></td>
+      <td>Friendlier error messages and step-by-step views of running code.</td>
+      <td>Errors explained in <i>maths</i> terms, linked to notation the student already knows; graphs, shapes and 3D surfaces.</td></tr>
+    <tr><td>Python graphing calculators
+        <span class="links"><a href="https://www.numworks.com">NumWorks</a> · <a href="https://education.ti.com/en/products/calculators/graphing-calculators/ti-84-plus-ce-python">TI-84 Plus CE Python</a></span></td>
+      <td>Python on a device built for maths.</td>
+      <td>No hardware to buy; code, sliders and graphs linked on one screen; explained errors.</td></tr>
+  </table>
+  <p class="faint" style="font-size: 8.3pt"><b>Trinket</b>, a popular classroom Python editor, <a href="https://trinket.io">shut down on 31 August 2026</a>; its saved trinkets, courses and assignments are no longer accessible. It's a useful example of the risk of depending on a hosted service — MathXplore runs from static files the school keeps.</p>
+</section>
+
+<!-- ======================================================================= -->
+<section class="page">
+  <div class="kicker"><span class="n">·</span>Being honest about it</div>
+  <h2>What's genuinely different</h2>
+  <p>Every ingredient exists somewhere. What's new is <b>the combination, in one page that runs anywhere</b>. Four parts of it are hard to copy:</p>
+
+  <div class="uniq">
+    <div class="item">
+      <h3 style="color: var(--danger)">Errors explained in maths terms</h3>
+      <p>Friendlier Python errors exist (Thonny, Futurecoder, friendly-traceback), but they explain Python in Python's terms. MathXplore's lessons start from the maths habit — "2<span class="m">x</span> means 2 times <span class="m">x</span>", "^ isn't a power" — because the team wrote its own Python engine (about 3,900 lines of TypeScript) and owns every message.</p>
+    </div>
+    <div class="item">
+      <h3 style="color: var(--spark)">Answers judged by running them</h3>
+      <p>Challenges execute the student's function at test points, so any correct solution passes — including one nobody anticipated. The student's own function is drawn over the goal, so a wrong answer looks exactly as wrong as it is.</p>
+    </div>
+    <div class="item">
+      <h3 style="color: var(--viz)">One loop around everything</h3>
+      <p>Learn → explore → predict → change → visualise → code → test → understand → create, lit up across the top of every working screen, with the maths, the picture and the Python on the same page.</p>
+    </div>
+    <div class="item">
+      <h3 style="color: var(--code)">Zero set-up, zero data</h3>
+      <p>Loads instantly with no login, keeps every record on the device, and costs almost nothing to host because it is just static files. No multi-megabyte Python download, as a Pyodide-based tool needs.</p>
+    </div>
+  </div>
+
+  <div class="say" style="margin-top: 4mm">
+    <div class="box warn"><div class="tag">Don't say</div>
+      <ul style="margin-bottom: 0"><li>"The first …" or "the only …"</li><li>"Improves results by …" — nothing has been measured yet</li><li>"Full Python"</li></ul>
+    </div>
+    <div class="box good"><div class="tag">Say instead</div>
+      <ul style="margin-bottom: 0"><li>"MathXplore <b>brings these together in one place</b>."</li><li>"It's <b>evidence-ready</b>: the logging for a pre/post-test study is built in."</li><li>"A deliberate <b>teaching subset</b> of Python."</li></ul>
+    </div>
+  </div>
+  <p class="faint" style="font-size: 8.5pt">A judge who knows one counter-example to "the first" will discount everything else you say.</p>
+
+  <div class="pitch">
+    <div class="tag">One-line pitch</div>
+    "Desmos shows you the maths, Python editors teach you the code. MathXplore is where they meet — and it works with the wifi off."
+  </div>
+</section>
+
+<!-- ======================================================================= -->
+<section class="page">
+  <div class="kicker"><span class="n">·</span>At the booth</div>
+  <h2>Where judges will push</h2>
+  <table class="qa">
+    <tr><td>"<a href="https://www.desmos.com/calculator">Desmos</a> is free and polished. Why use yours?"</td><td>Desmos teaches the picture, and Python editors teach the code. MathXplore is the bridge between them — with prediction and maths-aware errors — and it works offline.</td></tr>
+    <tr><td>"<a href="https://www.geogebra.org/python/index.html">GeoGebra already lets you write Python</a>."</td><td>Yes — PyGgb is the closest idea, and it shows the direction matters. It's an open coding tool; MathXplore wraps the code in a guided loop of lessons, What If? predictions, explained errors and graded challenges, and runs from files the school keeps.</td></tr>
+    <tr><td>"Does it work?"</td><td>It hasn't been measured yet, and we don't claim it. The event log, CSV/JSON export and anonymous participant codes are built; the next step is a school pilot with a pre- and post-test.</td></tr>
+    <tr><td>"Why is there so little content?"</td><td>6 lessons and 12 challenges is small next to <a href="https://www.khanacademy.org">Khan Academy</a> or <a href="https://brilliant.org">Brilliant</a>. They prove the method works; teacher authoring tools are on the roadmap.</td></tr>
+    <tr><td>"Is it real Python?"</td><td>A deliberate teaching subset: variables, loops, functions, lists, the maths module and plotting — no classes or dictionaries. Its behaviour is tested against real Python (119 engine checks).</td></tr>
+  </table>
+
+  <div class="box note" style="margin-top: 5mm">
+    <div class="tag">Updated since our chat</div>
+    <ul style="margin-bottom: 0">
+      <li><b>GeoGebra now has a Python app (PyGgb)</b> that builds GeoGebra constructions from Python code. The chat version said graphing apps had "no path to Python"; that was wrong, and PyGgb is now listed as the closest idea.</li>
+      <li><b>Trinket shut down on 31 August 2026.</b> It's kept in the table, marked as such, with Programiz added as a working example.</li>
+      <li><b>Friendlier error messages exist elsewhere</b> (Thonny, Futurecoder, friendly-traceback). The chat said a Pyodide-based tool "can't rewrite the error messages"; it can. MathXplore's real difference is explaining errors in maths terms, with no download.</li>
+      <li><b>"The first place these come together"</b> contradicted the "don't say first" advice; it's now "brings these together in one place".</li>
+      <li>Casio's Python calculators were dropped from the table: their site blocks automated checks, so the link couldn't be verified.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ======================================================================= -->
+<section class="page">
+  <div class="kicker"><span class="n">·</span>Reference</div>
+  <h2>All links</h2>
+  <p class="muted">Checked 24 September 2026. Each opened successfully (HTTP 200) except where noted.</p>
+  <div class="linklist">
+    <div><b>Desmos Graphing Calculator</b><a href="https://www.desmos.com/calculator">https://www.desmos.com/calculator</a></div>
+    <div><b>Desmos 3D Calculator</b><a href="https://www.desmos.com/3d">https://www.desmos.com/3d</a></div>
+    <div><b>GeoGebra</b><a href="https://www.geogebra.org">https://www.geogebra.org</a></div>
+    <div><b>GeoGebra offline apps</b><a href="https://www.geogebra.org/download">https://www.geogebra.org/download</a></div>
+    <div><b>GeoGebra Python (PyGgb) web app</b><a href="https://www.geogebra.org/python/index.html">https://www.geogebra.org/python/index.html</a></div>
+    <div><b>PyGgb documentation</b><a href="https://www.geogebra.org/python/doc/index.html">https://www.geogebra.org/python/doc/index.html</a></div>
+    <div><b>Brilliant</b><a href="https://brilliant.org">https://brilliant.org</a></div>
+    <div><b>Jupyter</b><a href="https://jupyter.org">https://jupyter.org</a></div>
+    <div><b>ipywidgets</b><a href="https://ipywidgets.readthedocs.io">https://ipywidgets.readthedocs.io</a></div>
+    <div><b>JupyterLite</b><a href="https://jupyterlite.readthedocs.io">https://jupyterlite.readthedocs.io</a></div>
+    <div><b>Pyodide</b><a href="https://pyodide.org">https://pyodide.org</a></div>
+    <div><b>Replit</b><a href="https://replit.com">https://replit.com</a></div>
+    <div><b>Programiz online Python compiler</b><a href="https://www.programiz.com/python-programming/online-compiler/">https://www.programiz.com/python-programming/online-compiler/</a></div>
+    <div><b>Trinket</b> <span class="faint">shut down 31 Aug 2026; the page now carries the notice</span><br><a href="https://trinket.io">https://trinket.io</a></div>
+    <div><b>Thonny</b><a href="https://thonny.org">https://thonny.org</a></div>
+    <div><b>Python Tutor</b><a href="https://pythontutor.com">https://pythontutor.com</a></div>
+    <div><b>Futurecoder</b><a href="https://futurecoder.io">https://futurecoder.io</a></div>
+    <div><b>friendly-traceback</b><a href="https://friendly-traceback.github.io/docs/">https://friendly-traceback.github.io/docs/</a></div>
+    <div><b>NumWorks</b><a href="https://www.numworks.com">https://www.numworks.com</a></div>
+    <div><b>TI-84 Plus CE Python</b><a href="https://education.ti.com/en/products/calculators/graphing-calculators/ti-84-plus-ce-python">https://education.ti.com/en/products/calculators/graphing-calculators/ti-84-plus-ce-python</a></div>
+    <div><b>Khan Academy</b><a href="https://www.khanacademy.org">https://www.khanacademy.org</a></div>
+  </div>
+
+</section>
+
+</body>
+</html>

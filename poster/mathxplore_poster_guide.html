@@ -1,0 +1,628 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>MathXplore Poster Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=STIX+Two+Text:ital@0;1&family=Space+Grotesk:wght@500;600;700&display=block" rel="stylesheet">
+<style>
+  @page { size: A4; margin: 15mm 16mm 17mm; }
+  :root {
+    --ink: #141a2e; --soft: #4a5572; --faint: #7a849e; --rule: #e3e7f0; --paper: #ffffff; --tint: #f5f6fb;
+    --math: #6d4fd8; --code: #13805c; --viz: #16719f; --spark: #a86a00; --danger: #c43a5a;
+    --display: 'Space Grotesk', 'Segoe UI', sans-serif; --sans: 'Inter', 'Segoe UI', sans-serif;
+    --mono: 'JetBrains Mono', Consolas, monospace; --m: 'STIX Two Text', Cambria, serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body { font-family: var(--sans); font-size: 9.4pt; line-height: 1.45; color: var(--ink); background: var(--paper); }
+  .page { break-before: page; }
+  .page:first-child { break-before: auto; }
+  h1 { font-family: var(--display); font-weight: 700; font-size: 30pt; line-height: 1.05; letter-spacing: -0.02em; }
+  h2 { font-family: var(--display); font-weight: 600; font-size: 19pt; line-height: 1.15; letter-spacing: -0.01em; margin-bottom: 3mm; }
+  h3 { font-family: var(--display); font-weight: 600; font-size: 12pt; line-height: 1.25; margin: 4mm 0 1.2mm; }
+  h4 { font-family: var(--display); font-weight: 600; font-size: 10.5pt; margin: 3mm 0 1mm; }
+  p { margin: 0 0 2.2mm; }
+  ul, ol { margin: 0 0 2.5mm 5mm; }
+  li { margin-bottom: 1mm; padding-left: 1mm; }
+  code, .mono { font-family: var(--mono); font-size: 0.92em; }
+  .m { font-family: var(--m); font-style: italic; }
+  b, strong { font-weight: 600; }
+  .muted { color: var(--soft); } .faint { color: var(--faint); }
+  .kicker { font-family: var(--display); font-weight: 600; font-size: 8.5pt; letter-spacing: 0.2em; text-transform: uppercase; color: var(--viz); margin-bottom: 1.5mm; }
+  .kicker .n { font-family: var(--mono); letter-spacing: 0.04em; color: var(--faint); margin-right: 2mm; }
+  .lead { font-size: 11pt; color: var(--soft); margin-bottom: 4mm; }
+
+  table { width: 100%; border-collapse: collapse; margin: 1.5mm 0 3.5mm; font-size: 9.2pt; }
+  th { text-align: left; font-family: var(--display); font-weight: 600; font-size: 7.6pt; letter-spacing: 0.08em; text-transform: uppercase; color: var(--faint); padding: 1.2mm 2mm; border-bottom: 1.5px solid var(--ink); }
+  td { padding: 1.35mm 2mm; border-bottom: 1px solid var(--rule); vertical-align: top; }
+  td:first-child { font-weight: 600; }
+  table.plain td:first-child { font-weight: 400; }
+
+  .write {
+    border: 1.5px solid #cfd6ea; border-left: 4px solid var(--code); border-radius: 2.5mm;
+    padding: 2.5mm 3.6mm; margin: 1.2mm 0 2.4mm; background: #f6fbf9; break-inside: avoid;
+  }
+  .write .tag { font-family: var(--display); font-weight: 600; font-size: 7.5pt; letter-spacing: 0.18em; text-transform: uppercase; color: var(--code); margin-bottom: 1mm; }
+  .write.short { border-left-color: var(--viz); background: #f4f9fc; }
+  .write.short .tag { color: var(--viz); }
+  .write p:last-child, .write ul:last-child { margin-bottom: 0; }
+  .note { border-radius: 2.5mm; padding: 2.6mm 4mm; margin: 2mm 0 3mm; background: #fff8e8; border: 1.5px solid #f0d9a4; font-size: 9.3pt; break-inside: avoid; }
+  .note b:first-child { color: var(--spark); }
+  .warn { background: #fdf0f3; border-color: #efbccb; }
+  .warn b:first-child { color: var(--danger); }
+  .sec { break-inside: avoid; margin-bottom: 2mm; }
+  .sec-head { display: flex; align-items: baseline; gap: 3mm; border-top: 2px solid var(--ink); padding-top: 2mm; margin-top: 2mm; }
+  .sec-head .num { font-family: var(--mono); font-size: 9pt; color: var(--faint); }
+  .sec-head h3 { margin: 0; }
+  .sec-head .where { margin-left: auto; font-size: 8.5pt; color: var(--faint); }
+  .meta { font-size: 9pt; color: var(--soft); margin: 1mm 0 1.5mm; }
+  .meta b { color: var(--ink); }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 6mm; }
+  .swatch { display: inline-block; width: 4mm; height: 4mm; border-radius: 1mm; vertical-align: -0.6mm; margin-right: 1.5mm; border: 1px solid rgba(0,0,0,0.15); }
+  .fill { color: var(--spark); font-weight: 600; }
+  .check li { list-style: none; margin-left: -5mm; padding-left: 6mm; position: relative; }
+  .check li::before { content: ''; position: absolute; left: 0; top: 1.2mm; width: 3mm; height: 3mm; border: 1.3px solid var(--soft); border-radius: 0.7mm; }
+
+  /* cover */
+  .cover { display: grid; grid-template-columns: 1fr 74mm; gap: 9mm; align-items: start; }
+  .cover .thumb { width: 74mm; border-radius: 2.5mm; box-shadow: 0 2mm 6mm rgba(20, 26, 46, 0.25); display: block; }
+  .cover h1 span { color: var(--math); }
+  .facts { margin-top: 6mm; display: grid; grid-template-columns: auto 1fr; gap: 1.4mm 5mm; font-size: 9.4pt; }
+  .facts dt { font-family: var(--display); font-weight: 600; font-size: 8pt; letter-spacing: 0.14em; text-transform: uppercase; color: var(--faint); padding-top: 0.5mm; }
+
+  /* poster map */
+  .map { display: grid; grid-template-columns: 70mm 1fr; gap: 7mm; }
+  .pin-wrap { position: relative; width: 70mm; }
+  .pin-wrap img { width: 70mm; display: block; border-radius: 2mm; }
+  .pin { position: absolute; right: -3mm; width: 6.5mm; height: 6.5mm; border-radius: 50%; background: #ffc83d; color: #141a2e; font-family: var(--display); font-weight: 700; font-size: 8pt; display: grid; place-items: center; border: 1.5px solid #141a2e; }
+  .band { position: absolute; left: -2.5mm; width: 1.5mm; border-radius: 1mm; background: #ffc83d; }
+</style>
+</head>
+<body>
+
+<!-- ======================================================================= -->
+<section class="page">
+  <div class="cover">
+    <div>
+      <div class="kicker">PEREKA 2026 · Poster content guide</div>
+      <h1>Math<span>Xplore</span><br>A0 poster, section by section</h1>
+      <p class="lead" style="margin-top: 5mm">Everything that goes on the poster — the words, the pictures, the numbers and where each number comes from — so you can rebuild or adapt it in Canva, PowerPoint or Illustrator if you'd rather not use the ready-made file.</p>
+
+      <h3>What's in this guide</h3>
+      <ol>
+        <li>Before you start — event facts, what to confirm, what to fill in</li>
+        <li>Print specifications — size, margins, type sizes, colours, fonts</li>
+        <li>Poster map — the layout, in millimetres, and what judges look for</li>
+        <li>Copy, section by section — paste-ready text, with shorter versions</li>
+        <li>Visuals — which screens to capture and how</li>
+        <li>Facts you can claim (and ones to avoid)</li>
+        <li>At the booth — 60-second pitch, demo route, likely questions</li>
+        <li>Print and day-of checklist</li>
+      </ol>
+
+      <dl class="facts">
+        <dt>Event</dt><dd>Pertandingan Reka Cipta (PEREKA) 2026, Universiti Malaysia Sabah</dd>
+        <dt>Theme</dt><dd><i>Transforming Ideas Into Impact</i></dd>
+        <dt>Judging</dt><dd>13 October 2026 · awards 14 October 2026</dd>
+        <dt>Venue</dt><dd>Kompleks Dewan Kuliah Pusat Ke-2, UMS</dd>
+        <dt>Files</dt><dd><code>MathXplore_PEREKA2026_Poster_A0.pdf</code> (print file)<br><code>mathxplore_poster.html</code> (editable source) · <code>assets/</code> (all images)</dd>
+      </dl>
+    </div>
+    <img class="thumb" src="assets/poster_thumb.jpg" alt="The finished poster">
+  </div>
+</section>
+
+<!-- ======================================================================= -->
+<section class="page">
+  <div class="kicker"><span class="n">01</span>Before you start</div>
+  <h2>Event facts, what to confirm, what to fill in</h2>
+
+  <h3>What the event page says</h3>
+  <table>
+    <tr><th style="width: 19%">Item</th><th>Detail</th></tr>
+    <tr><td>Competition</td><td>Pertandingan Reka Cipta (PEREKA) 2026, part of the Borneo Festival of Ideas, Universiti Malaysia Sabah</td></tr>
+    <tr><td>Theme</td><td><i>Transforming Ideas Into Impact</i> — echo it on the poster (the design does, in the header and footer)</td></tr>
+    <tr><td>Categories</td><td>Engineering &amp; Technology (EAT) · Environmental &amp; Applied Sciences (EAS) · Medicine &amp; Life Sciences (MLS) · Arts, Social Sciences &amp; Humanities (ASH)</td></tr>
+    <tr><td>Clusters</td><td>Include <b>Education</b> — MathXplore's natural cluster</td></tr>
+    <tr><td>Key dates</td><td>Briefing 18 Sep 2026 · <b>Judging 13 Oct 2026</b> · Winners and awards 14 Oct 2026</td></tr>
+    <tr><td>Venue</td><td>Kompleks Dewan Kuliah Pusat Ke-2, UMS</td></tr>
+  </table>
+
+  <div class="note warn"><b>Confirm before printing.</b> The official guideline folder (linked from the PEREKA 2026 page) needs a UMS login, so it couldn't be checked for this guide. The design follows standard innovation-poster practice: A0 portrait, logos at the top, problem → solution → novelty → impact → commercialisation. Check the briefing notes (18 Sep) or ask the secretariat about: <b>required size and orientation</b>, <b>mandatory logos or a template</b>, <b>whether an entry ID must appear</b>, <b>language</b> (English, Bahasa Melayu or both), and <b>the judging rubric and its weightings</b>.</div>
+
+  <h3>Placeholders to fill in</h3>
+  <p class="muted">In the ready-made poster each of these prints in <span class="fill">amber with a dashed underline</span>, so a missed one is easy to spot on a proof. In <code>mathxplore_poster.html</code>, search for <code>class="fill"</code>.</p>
+  <table>
+    <tr><th style="width: 19%">Placeholder</th><th style="width: 17%">Where</th><th>What to put</th></tr>
+    <tr><td>Three logos</td><td>Top-left</td><td>UMS, PEREKA 2026 (or Borneo Festival of Ideas) and your faculty/school. Use the organiser's official files, PNG with transparency, at least 1000 px wide.</td></tr>
+    <tr><td>Category</td><td>Header chip</td><td>The category you registered under. For a software learning tool, <b>EAT</b> is usual; <b>ASH</b> suits it if you entered it as education research.</td></tr>
+    <tr><td>Entry ID</td><td>Header chip</td><td>The booth/entry number the secretariat assigns. Delete the chip if there isn't one.</td></tr>
+    <tr><td>Team members</td><td>Under the pitch</td><td>Full names as registered, e.g. <i>Nur Aisyah binti Ahmad</i>. Put the team leader first.</td></tr>
+    <tr><td>Supervisor</td><td>Under the pitch</td><td>With title, e.g. <i>Dr. …</i> / <i>Prof. Madya …</i></td></tr>
+    <tr><td>From</td><td>Under the pitch</td><td>Faculty/school and institution, e.g. <i>Faculty of …, Universiti Malaysia Sabah</i></td></tr>
+    <tr><td>QR code</td><td>Bottom-right</td><td>A link to a hosted copy of the app or a 60–90 s demo video (YouTube unlisted or Google Drive). Test it with two different phones before printing.</td></tr>
+    <tr><td>Email</td><td>Bottom-right</td><td>The team contact address.</td></tr>
+  </table>
+</section>
+
+<!-- ======================================================================= -->
+<section class="page">
+  <div class="kicker"><span class="n">02</span>Print specifications</div>
+  <h2>Size, margins, type, colour</h2>
+
+  <div class="grid2">
+    <div>
+      <h3>Page</h3>
+      <table class="plain">
+        <tr><td>Size</td><td><b>A0 portrait, 841 × 1189 mm</b></td></tr>
+        <tr><td>Safe margin</td><td>Keep text at least 20 mm from every edge (poster v2: 32 mm at the sides, about 24 mm top and bottom)</td></tr>
+        <tr><td>Bleed</td><td>Ask the printer. Most roll-up and poster shops want 3–5 mm; the dark background can simply extend</td></tr>
+        <tr><td>Images</td><td>At least <b>150 dpi at printed size</b>: a picture printed 25 cm wide needs ≥ 1480 px</td></tr>
+        <tr><td>Whole poster as pixels</td><td>4967 × 7022 px at 150 dpi; 9933 × 14043 px at 300 dpi</td></tr>
+        <tr><td>File</td><td>PDF with fonts embedded (the supplied file already is)</td></tr>
+      </table>
+
+      <h3>Type sizes that read from 1–2 m</h3>
+      <table class="plain">
+        <tr><th>Element</th><th>Size used</th><th>Minimum</th></tr>
+        <tr><td>Title</td><td>≈ 190 pt</td><td>120 pt</td></tr>
+        <tr><td>Tagline</td><td>≈ 78 pt</td><td>60 pt</td></tr>
+        <tr><td>Section headings</td><td>36–48 pt</td><td>36 pt</td></tr>
+        <tr><td>Pitch paragraph</td><td>36 pt</td><td>28 pt</td></tr>
+        <tr><td>Body and captions</td><td>21–25 pt</td><td>20 pt</td></tr>
+        <tr><td>Small print (legend, labels)</td><td>18–20 pt</td><td>16 pt</td></tr>
+      </table>
+    </div>
+    <div>
+      <h3>Colours — the app's own palette</h3>
+      <table class="plain">
+        <tr><td><span class="swatch" style="background:#060818"></span>Ink (background)</td><td><code>#060818</code></td></tr>
+        <tr><td><span class="swatch" style="background:#eef2fc"></span>Paper (text)</td><td><code>#EEF2FC</code></td></tr>
+        <tr><td><span class="swatch" style="background:#a9b6d3"></span>Muted text</td><td><code>#A9B6D3</code></td></tr>
+        <tr><td><span class="swatch" style="background:#b39cff"></span>Mathematics — violet</td><td><code>#B39CFF</code></td></tr>
+        <tr><td><span class="swatch" style="background:#4cc9ff"></span>Visualisation — cyan</td><td><code>#4CC9FF</code></td></tr>
+        <tr><td><span class="swatch" style="background:#3ee6a8"></span>Code — green</td><td><code>#3EE6A8</code></td></tr>
+        <tr><td><span class="swatch" style="background:#ffc83d"></span>Attention — amber</td><td><code>#FFC83D</code></td></tr>
+        <tr><td><span class="swatch" style="background:#ff7a95"></span>Problems / errors — rose</td><td><code>#FF7A95</code></td></tr>
+      </table>
+      <p class="muted" style="font-size: 9pt">The colour rule matches the app: violet means mathematics, green means code, cyan means pictures and amber means "look here". Keep it consistent and visitors learn it without a legend.</p>
+
+      <h3>Fonts (all free, Google Fonts)</h3>
+      <table class="plain">
+        <tr><td>Headings, numbers</td><td><b>Space Grotesk</b> 600–700</td></tr>
+        <tr><td>Body</td><td><b>Inter</b> 400 / 600</td></tr>
+        <tr><td>Code</td><td><b>JetBrains Mono</b> 400</td></tr>
+        <tr><td>Equations</td><td><b>STIX Two Text</b> italic (Cambria Math also works)</td></tr>
+      </table>
+      <p class="muted" style="font-size: 9pt">In Canva, all four are available except STIX; use <i>Cambria</i> or <i>Times New Roman italic</i> for equations.</p>
+    </div>
+  </div>
+
+  <div class="note"><b>Printing a dark poster.</b> Large dark areas look richer on screen than on paper and can band on cheap inkjets. Ask for a <b>small proof</b> (A3 is enough) before the A0 run, choose <b>matte or satin</b> paper (gloss glares under hall lighting), and ask the shop to print the PDF "as is" with no colour correction. If they prefer an image file, export a 150 dpi PNG from the PDF.</div>
+</section>
+
+<!-- ======================================================================= -->
+<section class="page">
+  <div class="kicker"><span class="n">03</span>Poster map</div>
+  <h2>Layout, top to bottom</h2>
+  <p class="lead" style="margin-bottom: 4mm">One reading path: <b>who we are → what it is → why it's needed → how it works → proof it works → why it's new → who benefits → how it grows</b>. A judge who reads only the top third should still know what MathXplore is.</p>
+
+  <div class="map">
+    <div class="pin-wrap">
+      <img src="assets/poster_thumb.jpg" alt="">
+      <!-- pins at section mid-heights (poster px ÷ 4493 × thumb height) -->
+      <span class="pin" style="top: calc(70mm * 1.4138 * 0.030 - 3mm)">1</span>
+      <span class="pin" style="top: calc(70mm * 1.4138 * 0.160 - 3mm)">2</span>
+      <span class="pin" style="top: calc(70mm * 1.4138 * 0.284 - 3mm)">3</span>
+      <span class="pin" style="top: calc(70mm * 1.4138 * 0.378 - 3mm)">4</span>
+      <span class="pin" style="top: calc(70mm * 1.4138 * 0.480 - 3mm)">5</span>
+      <span class="pin" style="top: calc(70mm * 1.4138 * 0.655 - 3mm)">6</span>
+      <span class="pin" style="top: calc(70mm * 1.4138 * 0.840 - 3mm)">7</span>
+      <span class="pin" style="top: calc(70mm * 1.4138 * 0.940 - 3mm)">8</span>
+    </div>
+    <div>
+      <table>
+        <tr><th>#</th><th>Band</th><th>Height (mm)</th><th>Contents</th></tr>
+        <tr><td>1</td><td>Header</td><td>40</td><td>3 logos · event name, date, theme · cluster, category, entry ID</td></tr>
+        <tr><td>2</td><td>Hero</td><td>225</td><td>Kicker · <b>MathXplore</b> + logo · <i>See. Change. Code.</i> · pitch · team · live 3D surface</td></tr>
+        <tr><td>3</td><td>Numbers</td><td>53</td><td>Six headline figures</td></tr>
+        <tr><td>4</td><td>01 Problem · 02 Idea</td><td>150</td><td>Three pain points · the core idea with the maths ⇄ picture ⇄ Python diagram</td></tr>
+        <tr><td>5</td><td>Learning loop</td><td>75</td><td>Nine stages, each tagged with the feature that delivers it</td></tr>
+        <tr><td>6</td><td>03 Inside the lab</td><td>305</td><td>Six real screenshots with captions</td></tr>
+        <tr><td>7</td><td>04 New · 05 Impact</td><td>123</td><td>Comparison table · four impact groups</td></tr>
+        <tr><td>8</td><td>06 Market · 07 Tech · Contact</td><td>94</td><td>Business model and next steps · engine and safety · QR and email</td></tr>
+      </table>
+
+
+    </div>
+  </div>
+  <h3>What judges typically score — and where the poster answers it</h3>
+      <table class="plain">
+        <tr><th style="width: 34%">Typical criterion</th><th>Answered by</th></tr>
+        <tr><td><b>Novelty / inventiveness</b></td><td>02 Idea, the learning loop, 04 comparison table, 07 own Python engine</td></tr>
+        <tr><td><b>Usefulness / practicality</b></td><td>03 six working screens, "0 internet or accounts", runs from one laptop</td></tr>
+        <tr><td><b>Impact</b> (the 2026 theme)</td><td>05 Impact: students, teachers, low-connectivity schools, evidence</td></tr>
+        <tr><td><b>Commercialisation</b></td><td>06 Market &amp; next steps: who pays, model, near-zero running cost</td></tr>
+        <tr><td><b>Presentation</b></td><td>Clear hierarchy, readable from 2 m, live demo at the booth</td></tr>
+      </table>
+      <p class="faint" style="font-size: 8.5pt">These are the usual headings at Malaysian innovation competitions. Replace them with the official PEREKA 2026 rubric once you have it, and make sure each criterion has a visible answer on the poster.</p>
+</section>
+
+<!-- ======================================================================= -->
+<section class="page">
+  <div class="kicker"><span class="n">04</span>Copy, section by section</div>
+  <h2>Header, hero and numbers</h2>
+  <p class="muted">Green boxes are the wording used on the finished poster; blue boxes are shorter alternatives if space is tight.</p>
+
+  <div class="sec">
+    <div class="sec-head"><span class="num">1</span><h3>Header strip</h3><span class="where">top edge, full width</span></div>
+    <div class="write"><div class="tag">Write this</div>
+      <p><b>PEREKA 2026 · Pertandingan Reka Cipta</b><br>Universiti Malaysia Sabah · 13–14 October 2026 · <i>Transforming Ideas Into Impact</i><br>CLUSTER · EDUCATION &nbsp;|&nbsp; CATEGORY · <span class="fill">[EAT / ASH]</span> &nbsp;|&nbsp; ENTRY ID · <span class="fill">[____]</span></p>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="sec-head"><span class="num">2</span><h3>Hero — title, tagline, pitch, team</h3><span class="where">top 25 % · the biggest type on the poster</span></div>
+    <div class="write"><div class="tag">Write this</div>
+      <p class="faint" style="font-size: 8.5pt; margin-bottom: 1mm">Kicker (small capitals, cyan)</p>
+      <p>AN INTERACTIVE MATHEMATICS LABORATORY</p>
+      <p class="faint" style="font-size: 8.5pt; margin-bottom: 1mm">Title (logo + name; "Xplore" in the cyan → violet → amber gradient)</p>
+      <p style="font-family: var(--display); font-weight: 700; font-size: 16pt">MathXplore</p>
+      <p class="faint" style="font-size: 8.5pt; margin-bottom: 1mm">Tagline (three colours: cyan / violet / green)</p>
+      <p style="font-family: var(--display); font-weight: 600; font-size: 13pt">See. Change. Code.</p>
+      <p class="faint" style="font-size: 8.5pt; margin-bottom: 1mm">Pitch</p>
+      <p>A browser-based lab where students <b>see</b> a function, <b>change</b> it with a slider, <b>predict</b> what happens next — and write the <b>Python</b> that draws it. Mathematics and programming, finally taught together.</p>
+      <p class="faint" style="font-size: 8.5pt; margin-bottom: 1mm">Team block</p>
+      <p>TEAM <span class="fill">[names]</span> · SUPERVISOR <span class="fill">[name]</span> · FROM <span class="fill">[faculty, institution]</span></p>
+    </div>
+    <div class="write short"><div class="tag">Shorter pitch</div>
+      <p>See a function. Change it with a slider. Predict what happens. Then write the Python that draws it.</p>
+    </div>
+    <p class="meta"><b>Picture:</b> the live 3D surface from the landing page, <span class="m">z</span> = sin(√(<span class="m">x</span>² + <span class="m">y</span>²) − <span class="m">t</span>), on a transparent background (<code>assets/surface_alpha.png</code>), with that equation in a pill beside it and the caption "live on the landing page — drag to rotate".</p>
+  </div>
+
+  <div class="sec">
+    <div class="sec-head"><span class="num">3</span><h3>Key numbers</h3><span class="where">one band of six, under the hero</span></div>
+    <table>
+      <tr><th style="width: 13%">Number</th><th style="width: 38%">Label</th><th>Source (see section 06)</th></tr>
+      <tr><td>5</td><td>Explore modules — from lines to 3D and geometry</td><td>Linear, Quadratic, Trigonometry, 3D Surfaces, Geometry</td></tr>
+      <tr><td>12</td><td>What If? scenarios — predict first, then see</td><td><code>src/content/whatif.ts</code></td></tr>
+      <tr><td>6</td><td>levels of Python taught through maths</td><td><code>src/content/lessons.ts</code></td></tr>
+      <tr><td>12</td><td>challenges graded by running the code</td><td><code>src/content/challenges.ts</code></td></tr>
+      <tr><td>182</td><td>automated checks — all passing</td><td><code>npm test</code>: 119 + 38 + 24 + 1</td></tr>
+      <tr><td>0</td><td>internet or accounts needed to run</td><td>No runtime network use; no login</td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- ======================================================================= -->
+<section class="page">
+  <div class="kicker"><span class="n">04</span>Copy, section by section</div>
+  <h2>Problem, idea and the learning loop</h2>
+
+  <div class="sec">
+    <div class="sec-head"><span class="num">01</span><h3>The problem</h3><span class="where">left card · rose accent</span></div>
+    <div class="write"><div class="tag">Write this</div>
+      <p><b>Maths and code, taught apart</b></p>
+      <ul>
+        <li><b>Two subjects, no bridge.</b> Loops learnt on arbitrary examples; graphs never linked to code.</li>
+        <li><b>Answers without understanding.</b> A calculator answers only what you already knew how to ask.</li>
+        <li><b>Errors that teach nothing.</b> <code>SyntaxError: invalid syntax</code> is a dead end for a beginner.</li>
+      </ul>
+    </div>
+    <div class="write short"><div class="tag">If you want a fourth point</div>
+      <p><b>Needs the internet.</b> Many learning tools depend on accounts, downloads and a fast connection.</p>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="sec-head"><span class="num">02</span><h3>Our idea</h3><span class="where">right card · green accent</span></div>
+    <div class="write"><div class="tag">Write this</div>
+      <p style="font-family: var(--display); font-size: 11.5pt">Every Python concept arrives <b style="color: var(--code)">because a piece of mathematics needs it</b> — and every picture on screen is also a program.</p>
+      <p>Diagram of three boxes joined by ⇄ arrows:<br>
+        <b style="color: var(--math)">MATHEMATICS</b> <span class="m">y</span> = <span class="m">ax</span>² + <span class="m">bx</span> + <span class="m">c</span> &nbsp;⇄&nbsp;
+        <b style="color: var(--viz)">PICTURE</b> (a parabola with its previous position dashed) &nbsp;⇄&nbsp;
+        <b style="color: var(--code)">PYTHON</b> <code>y = a*x**2 + b*x + c</code></p>
+      <p><b>Change any one and the other two follow</b> — a slider rewrites the code, and the code redraws the graph.</p>
+    </div>
+    <div class="write short"><div class="tag">Objectives — if your rubric asks for them</div>
+      <ol style="margin-bottom: 0">
+        <li>To connect mathematical concepts and Python programming in one learning loop.</li>
+        <li>To build understanding through prediction, manipulation and visualisation.</li>
+        <li>To turn programming errors into mathematics-aware lessons for beginners.</li>
+        <li>To provide a safe platform that runs in any modern browser, offline, with no account.</li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="sec-head"><span class="num">·</span><h3>The learning loop</h3><span class="where">full-width band</span></div>
+    <div class="write"><div class="tag">Write this</div>
+      <p><b>One learning loop, lit up on every working screen</b> — so a student always sees where they are, and that there is a next step.</p>
+      <p style="margin: 0">Nine stages, each with a small tag underneath: <b>LEARN</b> <span class="muted">6-level pathway</span> → <b>EXPLORE</b> <span class="muted">5 modules</span> → <b>PREDICT</b> <span class="muted">What If?</span> → <b>CHANGE</b> <span class="muted">live sliders</span> → <b>VISUALISE</b> <span class="muted">2D · 3D</span> → <b>CODE</b> <span class="muted">CodeLab</span> → <b>TEST</b> <span class="muted">challenges</span> → <b>UNDERSTAND</b> <span class="muted">error lessons</span> → <b>CREATE</b> <span class="muted">sandbox · shapes</span></p>
+    </div>
+    <p class="meta"><b>Icons:</b> use the app's own line icons (book, eye, lightbulb, sliders, chart, code brackets, target, tick, flask). In Canva, the "line icons" set is close enough. Colour each stage by domain: violet, cyan, amber, violet, cyan, green, amber, green, violet.</p>
+  </div>
+</section>
+
+<!-- ======================================================================= -->
+<section class="page">
+  <div class="kicker"><span class="n">04</span>Copy, section by section</div>
+  <h2>03 Inside the lab — six screens</h2>
+  <p class="muted">Heading: <b>Real screens, real mathematics</b> · side note: <i>Every image is captured from the working system — nothing is mocked up.</i> Each card is a screenshot on top with a coloured title and a two- or three-line caption below it.</p>
+
+  <table>
+    <tr><th style="width: 23%">Card title</th><th style="width: 47%">Caption (write this)</th><th>Screenshot</th></tr>
+    <tr><td style="color: var(--spark)">What If? — predict, then see</td><td><b>Students commit to a prediction before anything moves.</b> Then the curve animates against a ghost of the old one, and the lab explains why it changed.</td><td>Quadratic module, What If? answered and revealed (<i>a</i> from 1 to −1). <code>whatif_card.jpg</code></td></tr>
+    <tr><td style="color: var(--code)">Every curve is also a program</td><td>Write Python, press Run, get mathematics back: <b>code → data → graph</b>, drawn on as you watch.</td><td>CodeLab "Two curves at once": editor inset over the graph. <code>code_editor.jpg</code> + <code>code_graph.jpg</code></td></tr>
+    <tr><td style="color: var(--danger)">Mistakes become lessons</td><td>Type <code>y = 2x + 3</code> and the lab explains that maths allows 2<i>x</i> but Python needs <code>2*x</code> — with a hint that stops short of the answer.</td><td>CodeLab after running <code>y = 2x + 3</code>. <code>error_panel.jpg</code> (or <code>error.jpg</code> with the editor)</td></tr>
+    <tr><td style="color: var(--math)">Shapes that know their maths</td><td><code>from shapes import *</code> — polygons, solids and turtle graphics. <b>Every shape reports its area, perimeter and volume</b> live.</td><td>Geometry Lab, "Solids" preset. <code>solids.jpg</code> (alternative: <code>flower.jpg</code>)</td></tr>
+    <tr><td style="color: var(--viz)">Maths in three dimensions</td><td>Rotate <i>z</i> = <i>a</i>(<i>x</i>² − <i>y</i>²), then slice it: <b>every cross-section is an ordinary 2D curve</b>, drawn alongside.</td><td>3D Surfaces, "Saddle". <code>saddle_tight.jpg</code></td></tr>
+    <tr><td style="color: var(--spark)">Graded by running the code</td><td>Answers are run, not text-matched, so <b>any correct solution passes</b>. The student's function is drawn over the goal.</td><td>Challenges, "Hit the target points", solved. <code>challenge_card.jpg</code></td></tr>
+  </table>
+
+  <div class="write short"><div class="tag">Longer What If? caption — if that card gets more room</div>
+    <p>Beside it, live analysis updates as a slider moves: vertex, roots, axis of symmetry and discriminant — plus the same curve written as Python, one click from CodeLab.</p>
+  </div>
+
+  <h3>Optional seventh card — for the research angle</h3>
+  <div class="write short"><div class="tag">Progress &amp; research export</div>
+    <p><b>Evidence, not claims.</b> A timestamped record of predictions, attempts, error types and solutions viewed — exportable as CSV/JSON, tied to a random participant code, never leaving the device. Screenshot: Progress page (<code>progress.jpg</code>).</p>
+  </div>
+
+  <div class="note"><b>Picture rule.</b> Crop each screenshot to the part the caption talks about. A whole-screen capture shrunk to 25 cm is unreadable at poster distance; a tight crop of one panel reads clearly. The supplied crops already follow this.</div>
+</section>
+
+<!-- ======================================================================= -->
+<section class="page">
+  <div class="kicker"><span class="n">04</span>Copy, section by section</div>
+  <h2>Novelty and impact</h2>
+
+  <div class="sec">
+    <div class="sec-head"><span class="num">04</span><h3>What makes it new</h3><span class="where">comparison table</span></div>
+    <table style="font-size: 9pt">
+      <tr><th style="width: 46%"></th><th>Graphing apps</th><th>Online Python editors</th><th style="color: var(--code)">MathXplore</th></tr>
+      <tr><td>Change maths live, in 2D and 3D</td><td>● yes</td><td>○ no</td><td>● yes</td></tr>
+      <tr><td>Python tied to the maths on screen</td><td>◐ partly†</td><td>◐ partly</td><td>● yes</td></tr>
+      <tr><td>Predict-then-reveal, built in</td><td>◐ partly*</td><td>○ no</td><td>● yes</td></tr>
+      <tr><td>Errors explained in maths terms</td><td>— n/a</td><td>○ no</td><td>● yes</td></tr>
+      <tr><td>Offline · no account · no data sent</td><td>◐ some</td><td>○ no</td><td>● yes</td></tr>
+    </table>
+    <p class="faint" style="font-size: 8.5pt">† GeoGebra's Python app (PyGgb, geogebra.org/python) builds GeoGebra constructions from Python code — the closest existing idea; see the comparison PDF. * Teacher-built activities on some graphing platforms ask students to predict. The column headings name categories, not products, which avoids arguments about any single competitor. At the booth you can name Desmos and GeoGebra (graphing) and typical browser Python editors as examples.</p>
+    <div class="write short"><div class="tag">One-sentence novelty statement</div>
+      <p>MathXplore brings together, in one offline browser tool, live 2D/3D mathematics, Python code tied to the same mathematics, predict-then-reveal questions, maths-aware error lessons and grading by execution.</p>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="sec-head"><span class="num">05</span><h3>Impact</h3><span class="where">four groups, 2 × 2</span></div>
+    <div class="write"><div class="tag">Write this</div>
+      <ul style="margin-bottom: 0">
+        <li><b>Students</b> — Understanding over memorising: every change is predicted, seen and explained.</li>
+        <li><b>Teachers</b> — Ready demonstrations, plus a class view built from students' real exported records.</li>
+        <li><b>Low-connectivity schools</b> — Runs from one laptop or a school intranet — no internet needed after setup.</li>
+        <li><b>Evidence-ready</b> — No effect claimed yet — anonymous on-device logs are ready for a pre/post-test study.</li>
+      </ul>
+    </div>
+    <div class="write short"><div class="tag">Optional SDG line</div>
+      <p><b>SDG 4 · Quality Education</b> — target 4.4, ICT skills; the UN indicator 4.4.1 counts "writing a computer program using a specialised programming language" as one of those skills.</p>
+    </div>
+  </div>
+
+</section>
+
+<!-- ======================================================================= -->
+<section class="page">
+  <div class="kicker"><span class="n">04</span>Copy, section by section</div>
+  <h2>Market, technology, contact — and Malay headings</h2>
+  <div class="grid2">
+    <div class="sec">
+      <div class="sec-head"><span class="num">06</span><h3>Market &amp; next steps</h3></div>
+      <div class="write"><div class="tag">Write this</div>
+        <p><b>Who</b> — Upper-secondary &amp; pre-university students, teachers, tutors<br>
+        <b>Model</b> — Free for students · school licence · offline school kit<br>
+        <b>Cost</b> — Static files, no server — near-zero cost per extra student<br>
+        <b>Next</b> — School pilot (pre/post-test) · Bahasa Melayu UI · authoring</p>
+      </div>
+      <p class="faint" style="font-size: 8.5pt">The school licence would cover the <b>roadmap</b> features (class rosters, activity authoring, reports), which are designed but not built. Say so if asked. If you have a MyIPO copyright filing, add "IP: copyright, MyIPO [no.]" here.</p>
+    </div>
+    <div class="sec">
+      <div class="sec-head"><span class="num">07</span><h3>Under the hood</h3></div>
+      <div class="write"><div class="tag">Write this</div>
+        <p><code>your Python → parser → interpreter → graphs · shapes · lessons</code></p>
+        <ul style="margin-bottom: 0">
+          <li>Own Python engine, ~3,900 lines, no dependencies</li>
+          <li>No <code>eval</code>, no network, no file access</li>
+          <li>Runaway loops stopped safely</li>
+          <li>React · TypeScript · Three.js</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="sec-head"><span class="num">·</span><h3>Contact and footer</h3></div>
+    <div class="write"><div class="tag">Write this</div>
+      <p><b>Try it yourself</b> — Ask us for the keyboard, or scan to open the lab. <span class="fill">[QR]</span> <span class="fill">[email]</span><br>
+      Footer line: <i>MathXplore · See. Change. Code.</i> &nbsp;…&nbsp; <i>PEREKA 2026 · Transforming Ideas Into Impact</i></p>
+    </div>
+  </div>
+
+  <h3>Section headings in Bahasa Melayu</h3>
+  <table class="plain">
+    <tr><th>English (poster)</th><th>Bahasa Melayu</th><th>English (poster)</th><th>Bahasa Melayu</th></tr>
+    <tr><td>The problem</td><td>Pernyataan masalah</td><td>What makes it new</td><td>Kebaharuan / Keunikan</td></tr>
+    <tr><td>Our idea</td><td>Idea / Penyelesaian</td><td>Impact</td><td>Impak</td></tr>
+    <tr><td>Objectives</td><td>Objektif</td><td>Market &amp; next steps</td><td>Potensi pengkomersialan</td></tr>
+    <tr><td>Inside the lab</td><td>Ciri-ciri utama</td><td>Under the hood</td><td>Teknologi</td></tr>
+    <tr><td>Learning loop</td><td>Kitaran pembelajaran</td><td>Try it yourself</td><td>Cuba sendiri</td></tr>
+  </table>
+</section>
+
+<!-- ======================================================================= -->
+<section class="page">
+  <div class="kicker"><span class="n">04</span>Copy, section by section</div>
+  <h2>Abstract, in English and Bahasa Melayu</h2>
+  <p class="muted">Not on the poster itself, but often requested for the abstract book, the registration form or a small panel beside the poster.</p>
+
+  <div class="write"><div class="tag">Abstract · 125 words</div>
+    <p>MathXplore is a browser-based interactive mathematics laboratory that teaches mathematics and Python programming together. Students see a function, change it with sliders, predict the outcome before it is revealed, and write the Python code that draws it. The platform provides five exploration modules (linear, quadratic and trigonometric functions, 3D surfaces and geometry), twelve predict-then-reveal "What If?" scenarios, a six-level Python × Mathematics pathway and twelve challenges graded by executing the student's code. A purpose-built Python engine, written in TypeScript, turns programming errors into plain-language lessons linked to mathematical notation, and runs safely inside the browser with no internet connection, installation or account. Built-in anonymous learning records prepare the platform for classroom evaluation through pre- and post-testing.</p>
+  </div>
+
+  <div class="write short"><div class="tag">Abstrak · Bahasa Melayu (have a native speaker check it)</div>
+    <p>MathXplore ialah makmal matematik interaktif berasaskan pelayar web yang mengajar matematik dan pengaturcaraan Python secara bersepadu. Pelajar melihat sesuatu fungsi, mengubahnya menggunakan peluncur, meramal hasilnya sebelum didedahkan, dan menulis kod Python yang melukisnya. Platform ini menyediakan lima modul penerokaan (fungsi linear, kuadratik dan trigonometri, permukaan 3D serta geometri), dua belas senario ramal-dan-lihat "What If?", laluan Python × Matematik enam tahap dan dua belas cabaran yang dinilai dengan melaksanakan kod pelajar. Enjin Python yang dibina khas dalam TypeScript menukar ralat pengaturcaraan kepada pelajaran dalam bahasa mudah yang dikaitkan dengan tatatanda matematik, dan berjalan dengan selamat dalam pelayar tanpa sambungan internet, pemasangan atau akaun. Rekod pembelajaran tanpa nama yang terbina dalam menyediakan platform ini untuk penilaian bilik darjah melalui ujian pra dan pasca.</p>
+  </div>
+
+</section>
+
+<!-- ======================================================================= -->
+<section class="page">
+  <div class="kicker"><span class="n">05</span>Visuals</div>
+  <h2>Which screens to capture, and how</h2>
+  <p class="muted">Every image on the finished poster is already in <code>poster/assets/</code>, captured at 3× resolution from a fresh build. Use this recipe to recapture any of them, for example after changing the app.</p>
+
+  <h3>Capture settings</h3>
+  <ul>
+    <li>Run the built app: <code>npm run build</code> then <code>npm run preview</code>, and open the address it prints in Chrome.</li>
+    <li>Window about <b>1600 × 1000</b>, dark theme (the default). For sharp prints, capture at <b>2–3× pixel density</b>: DevTools → device toolbar → set <i>DPR</i> to 3, then "Capture screenshot".</li>
+    <li>Move the mouse off the page before capturing so no tooltip is showing.</li>
+  </ul>
+
+  <table>
+    <tr><th style="width: 22%">Picture</th><th style="width: 38%">Route and state</th><th>Supplied file</th></tr>
+    <tr><td>Hero surface</td><td>Landing page (<code>#/</code>), third screen — the live surface. Transparent version made by hiding page backgrounds.</td><td><code>surface_alpha.png</code> (also <code>hero_surface.jpg</code> with background)</td></tr>
+    <tr><td>What If?</td><td><code>#/explore/quadratic</code> → choose "It flips to open downward…" → <i>Lock in and see what happens</i></td><td><code>whatif_card.jpg</code>, <code>whatif.jpg</code> (whole module)</td></tr>
+    <tr><td>Code → graph</td><td><code>#/codelab</code> → "Two curves at once" → Run</td><td><code>code_editor.jpg</code>, <code>code_graph.jpg</code>, <code>mathmap.jpg</code></td></tr>
+    <tr><td>Error lesson</td><td><code>#/codelab</code> → type <code>x = 4</code> / <code>y = 2x + 3</code> / <code>print(y)</code> → Run</td><td><code>error_panel.jpg</code>, <code>error.jpg</code></td></tr>
+    <tr><td>Geometry</td><td><code>#/explore/geometry</code> → "Solids" (or "Flower" for turtle)</td><td><code>solids.jpg</code>, <code>flower.jpg</code>, <code>solids_alpha.png</code></td></tr>
+    <tr><td>3D surface</td><td><code>#/explore/surfaces</code> → "Saddle"</td><td><code>saddle_tight.jpg</code>, <code>saddle.jpg</code></td></tr>
+    <tr><td>Challenge</td><td><code>#/challenges</code> → "Hit the target points" → set <code>a = 1</code>, <code>b = -2</code>, <code>c = 3</code> → Run &amp; check</td><td><code>challenge_card.jpg</code>, <code>challenge.jpg</code></td></tr>
+    <tr><td>Progress</td><td><code>#/progress</code> after a few activities</td><td><code>progress.jpg</code></td></tr>
+    <tr><td>Whole app</td><td><code>#/explore/quadratic</code>, full window — for a laptop mock-up if you want one</td><td><code>quadratic_app.jpg</code>, <code>landing_top.jpg</code></td></tr>
+  </table>
+
+  <h3>Graphics that aren't screenshots</h3>
+  <ul>
+    <li><b>Logo mark</b> — the parabola with code brackets from the app header (<code>src/components/layout/AppShell.tsx</code>, <code>Logo</code>). The poster HTML contains it as SVG, so you can copy it into Illustrator or Inkscape.</li>
+    <li><b>Perspective grid</b> behind the hero — echoes the app's "receding horizon" floor. Optional.</li>
+    <li><b>Glass spheres</b> — decoration from the app's background. Use no more than two or three.</li>
+  </ul>
+</section>
+
+<!-- ======================================================================= -->
+<section class="page">
+  <div class="kicker"><span class="n">06</span>Facts</div>
+  <h2>What you can safely claim — and what to avoid</h2>
+  <p class="muted">Every number on the poster was checked against the source code and a fresh test run on 24 September 2026. If the app changes before the event, re-check these.</p>
+
+  <table>
+    <tr><th style="width: 34%">Claim</th><th style="width: 38%">Evidence</th><th>How to re-check</th></tr>
+    <tr><td>5 Explore modules</td><td>Linear, Quadratic, Trigonometry, 3D Surfaces, Geometry</td><td><code>src/pages/explore/</code></td></tr>
+    <tr><td>12 What If? scenarios</td><td>12 scenario ids (linear 3, quadratic 4, trig 3, surfaces 2)</td><td><code>src/content/whatif.ts</code> — the README still says 11; the code has 12</td></tr>
+    <tr><td>6-level pathway</td><td>Variables, Operations, Conditions, Loops, Functions, Visualisation</td><td><code>src/content/lessons.ts</code></td></tr>
+    <tr><td>12 challenges</td><td>3 Maths→Code, 4 Code→Graph, 5 Predict-the-output</td><td><code>src/content/challenges.ts</code></td></tr>
+    <tr><td>182 automated checks, all passing</td><td>Engine 119 · graders 38 · pages 24 · mount 1</td><td><code>npm test</code></td></tr>
+    <tr><td>~3,900-line Python engine, no dependencies</td><td>3,899 lines across tokenizer, parser, interpreter, geometry, hints</td><td><code>src/lib/pyengine/</code></td></tr>
+    <tr><td>14 geometry presets</td><td>Circle … Orbit</td><td><code>src/content/geometry.ts</code></td></tr>
+    <tr><td>No internet or account needed</td><td>No runtime network requests; no login anywhere</td><td>README "Running it"</td></tr>
+    <tr><td>Nothing leaves the device</td><td>Records are stored in the browser; export is manual</td><td><code>src/state/progress.tsx</code></td></tr>
+    <tr><td>Safe by construction</td><td>No <code>eval</code>; only registered builtins; 2,000,000-step budget; output and shape caps</td><td>README "Safety model"</td></tr>
+  </table>
+
+  <div class="note warn"><b>Don't claim these.</b>
+    <ul style="margin: 1.5mm 0 0 5mm">
+      <li><b>Any learning gain</b> ("improves scores by X %"). It hasn't been measured, and the app itself says so. Say "evidence-ready" and describe the planned pilot.</li>
+      <li><b>"The first" or "the only".</b> Unverifiable, and a judge who knows one counter-example will discount the rest. Use "combines, in one tool…".</li>
+      <li><b>Class rosters, activity authoring or report generation as working features.</b> They are designed, not built; label them roadmap.</li>
+      <li><b>"Full Python".</b> It is a teaching subset: no classes, dictionaries, comprehensions or exceptions, by design.</li>
+      <li><b>Curriculum alignment or market-size figures</b> without a source. If you add them (e.g. KSSM topics, number of secondary students), cite the official document.</li>
+    </ul>
+  </div>
+
+  <div class="note"><b>Honesty helps here.</b> Academic judges respond well to "we haven't measured it yet — here is exactly how we will" — especially when the measuring apparatus is already built and you can show the export at the booth.</div>
+</section>
+
+<!-- ======================================================================= -->
+<section class="page">
+  <div class="kicker"><span class="n">07</span>At the booth</div>
+  <h2>60-second pitch, demo route, likely questions</h2>
+
+  <div class="write"><div class="tag">60-second pitch</div>
+    <p>"Mathematics and programming are hard partly because they're taught apart. MathXplore puts them in one lab. <i>[point at the loop]</i> A student sees a function, changes it with a slider, predicts what will happen before we show them, and then writes the Python that draws it. <i>[hand over the laptop]</i> Try it — what happens to this parabola if <i>a</i> goes from 1 to −1? … Now the same curve as code. If I make a typical beginner's mistake — <code>2x</code> instead of <code>2*x</code> — the lab doesn't just say 'syntax error'; it explains the maths reason. It runs completely offline, needs no account, and is checked by 182 automated tests. Next, we want to pilot it in a school with a pre- and post-test — the logging for that is already built in."</p>
+  </div>
+
+  <h3>Demo route (2–3 minutes, from the README)</h3>
+  <ol>
+    <li><b>Landing</b> — rotate the live surface.</li>
+    <li><b>Explore → Quadratic</b> — move <i>a</i>; vertex, roots, axis and discriminant update.</li>
+    <li><b>What If?</b> — ask the judge to predict <i>a</i>: 1 → −1. They must commit before the reveal.</li>
+    <li><b>Open in CodeLab</b> — change a coefficient, Run; then type <code>y = 2x + 3</code> for the error lesson.</li>
+    <li><b>3D Surfaces → Saddle</b> — rotate it; show the cross-sections.</li>
+    <li><b>Geometry → Polygon</b> — drag <i>n</i>; the area closes in on the circle's.</li>
+    <li><b>Challenges → Hit the target points</b> — hand over the keyboard.</li>
+    <li><b>Progress</b> — the learning record and CSV export.</li>
+  </ol>
+
+  <h3>Likely questions</h3>
+  <table class="plain" style="font-size: 9pt">
+    <tr><td style="width: 33%"><b>How is this different from Desmos or GeoGebra?</b></td><td>They're excellent for seeing maths. MathXplore adds Python tied to the same maths, predict-then-reveal, errors explained in maths terms and grading by running code — all offline.</td></tr>
+    <tr><td><b>Why write your own Python engine instead of Pyodide?</b></td><td>Three reasons: Pyodide needs a multi-megabyte download and the network; its raw errors teach nothing, while owning the parser means owning the message; and safety is structural — student code can reach only what we register.</td></tr>
+    <tr><td><b>Does it actually improve learning?</b></td><td>Not measured yet, and we don't claim it. The event log, CSV/JSON export and anonymous participant codes are built for a pre/post-test pilot.</td></tr>
+    <tr><td><b>What about student data?</b></td><td>Nothing leaves the browser. No accounts; a random participant code with no personal data; export only when the student chooses.</td></tr>
+    <tr><td><b>How would it make money?</b></td><td>Free for students; school licences for the educator features; offline deployment kits and teacher training. Hosting is static files, so each extra student costs almost nothing.</td></tr>
+    <tr><td><b>What are the limitations?</b></td><td>A deliberate Python subset (no classes or dictionaries); a simple mastery model; rosters and authoring still on the roadmap; 3D needs WebGL (2D always works).</td></tr>
+    <tr><td><b>How do you know it works?</b></td><td>182 automated checks: Python behaviour against CPython, every grader against its reference solution, every page rendering, and a full app mount with no errors.</td></tr>
+  </table>
+</section>
+
+<!-- ======================================================================= -->
+<section class="page">
+  <div class="kicker"><span class="n">08</span>Checklists</div>
+  <h2>Before printing, and on the day</h2>
+
+  <div class="grid2">
+    <div>
+      <h3>Before you send it to print</h3>
+      <ul class="check">
+        <li>Size, orientation and logo rules confirmed with the secretariat</li>
+        <li>All amber placeholders replaced: logos, category, entry ID, team, supervisor, faculty, QR, email</li>
+        <li>Names spelt exactly as registered</li>
+        <li>QR code tested with two phones, from 1 m away</li>
+        <li>No text closer than 20 mm to the edge</li>
+        <li>Numbers re-checked if the app changed (section 06)</li>
+        <li>Proof-read out loud by someone who didn't write it</li>
+        <li>A3 test print checked for colour, then A0 on matte or satin paper</li>
+        <li>PDF opened once on another computer to confirm the fonts</li>
+      </ul>
+
+      <h3>To edit the ready-made poster</h3>
+      <ol>
+        <li>Open <code>poster/mathxplore_poster.html</code> in a text editor (VS Code, Notepad++).</li>
+        <li>Search <code>class="fill"</code> and replace each placeholder's text.</li>
+        <li>For logos, replace each <code>&lt;div class="logo-slot"&gt;…&lt;/div&gt;</code> with <code>&lt;div class="logo-slot"&gt;&lt;img src="assets/ums.png"&gt;&lt;/div&gt;</code>; for the QR, do the same inside <code>qr-slot</code>.</li>
+        <li>Open the file in <b>Chrome</b> (be online so the fonts load) → Ctrl+P → <b>Save as PDF</b> → More settings: Margins <b>None</b>, <b>Background graphics</b> on → Save. The A0 size is picked up automatically.</li>
+      </ol>
+    </div>
+    <div>
+      <h3>On judging day (13 October)</h3>
+      <ul class="check">
+        <li>Laptop with the app <b>already running offline</b> (<code>npm run preview</code>) — don't rely on venue wifi</li>
+        <li>A second copy of <code>dist/</code> on a USB stick, plus a second browser</li>
+        <li>Charger and extension lead</li>
+        <li>Browser zoomed so the demo reads from 1.5 m; dark theme on</li>
+        <li>Progress page reset, or seeded with a clean demo record</li>
+        <li>What If? scenario 1 on the Quadratic page ready to go</li>
+        <li>The 60-second pitch rehearsed; each team member knows one part of the demo</li>
+        <li>Printed abstract (EN/BM) and a few A5 flyers with the QR</li>
+        <li>Answers to the "likely questions" divided between team members</li>
+      </ul>
+
+      <div class="note" style="margin-top: 5mm"><b>Remember the blank-page trap.</b> Double-clicking <code>dist/index.html</code> shows an empty dark page — browsers block module scripts on <code>file://</code>. Always serve it: <code>npm run preview</code>, or <code>python -m http.server</code> inside <code>dist/</code>.</div>
+    </div>
+  </div>
+</section>
+
+</body>
+</html>
