@@ -22,3 +22,10 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Deliverables package (generated copy of source, build and documents)
+/Deliverables-mathxplore/
+/Deliverables-mathxplore.zip
+
+# PEREKA 2026 presentation scripts
+/PEREKA-2026-Script/
