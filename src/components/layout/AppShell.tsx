@@ -6,11 +6,12 @@
  * as words to assistive technology.
  */
 
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
-import { cx } from '../ui/Primitives';
+import { IconButton, cx } from '../ui/Primitives';
 import { Icon, type IconName } from '../ui/Icon';
 import { Tooltip } from '../ui/Tooltip';
+import { useFullscreen } from '../ui/Fullscreen';
 import { useTheme } from '../../state/theme';
 
 const NAV: { to: string; label: string; icon: IconName; tone: string }[] = [
@@ -93,6 +94,19 @@ export function AppShell({ children }: { children: React.ReactNode }) {
       </button>
     </Tooltip>
   );
+  // The whole app on the whole screen: the page itself is the fullscreen
+  // element, so routes change underneath it without leaving full screen.
+  const pageRef = useRef<HTMLElement | null>(typeof document === 'undefined' ? null : document.documentElement);
+  const fullscreen = useFullscreen(pageRef);
+  const fullscreenButton = fullscreen.supported && (
+    <IconButton
+      icon={fullscreen.active ? 'shrink' : 'fit'}
+      label={fullscreen.active ? 'Exit full screen' : 'Full screen'}
+      on={fullscreen.active}
+      size={17}
+      onClick={fullscreen.toggle}
+    />
+  );
 
   return (
     <>
@@ -104,7 +118,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
               <Link to="/" className="flex shrink-0 items-center gap-2.5 pl-1 text-paper" aria-label="MathXplore home">
                 <Logo />
                 <span className="hidden text-[14px] font-semibold tracking-tight sm:block">
-                  MathXplore <span className="ml-1 rounded-full border border-line px-1.5 py-px text-[9.5px] font-semibold text-faint">v2</span>
+                  MathXplore
                 </span>
               </Link>
 
@@ -126,10 +140,14 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                   </Tooltip>
                 ))}
                 <span className="mx-1 h-6 w-px bg-line" />
+                {fullscreenButton}
                 {themeButton}
               </nav>
 
-              <span className="ml-auto md:hidden">{themeButton}</span>
+              <span className="ml-auto flex items-center gap-1 md:hidden">
+                {fullscreenButton}
+                {themeButton}
+              </span>
               <button
                 onClick={() => setOpen((o) => !o)}
                 className="icon-btn md:hidden"

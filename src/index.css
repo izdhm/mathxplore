@@ -240,15 +240,16 @@
 
   /* A frame taken to the whole screen: no rounding, deep ground behind it,
      and the WebGL mount inside stretches to fill (its inline height is only
-     for the in-page layout). */
-  :fullscreen {
+     for the in-page layout). :not(:root) keeps these off the whole-app full
+     screen, where the page itself is the fullscreen element. */
+  :fullscreen:not(:root) {
     background: #04050d;
   }
   .viz-frame:fullscreen {
     border-radius: 0;
     border: 0;
   }
-  :fullscreen .viz-3d,
+  :fullscreen:not(:root) .viz-3d,
   .viz-3d:fullscreen {
     height: 100% !important;
   }
